@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#15191f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Salute">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icona-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icona-180.png">
+<title>Dashboard Medico</title>
+<script>
+// Tema e dimensione del testo applicati subito, prima di disegnare la pagina
+(function(){var d=document.documentElement;try{var t=localStorage.getItem('dm_tema');if(t==='light')d.setAttribute('data-theme','light');var s=parseFloat(localStorage.getItem('dm_scala'));if(s>=12&&s<=30)d.style.fontSize=s+'px';}catch(e){}})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<!-- Dati personali: file separato, da NON pubblicare. Se manca, i dati si importano dal pulsante Importa. -->
+<script src="dati_profilo.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  font-size:17px;
+  --bg:#15191f;--bg2:#1f252d;--bg3:#2a313c;
+  --border:rgba(255,255,255,.17);--border2:rgba(255,255,255,.09);
+  --text:#eef1f6;--text2:#b4bccb;--text3:#d5dbe6;
+  --accent:#4f8fc0;--accent-strong:#3a78a8;--on-accent:#fff;
+  --user-bubble:#2d5a7a;--user-text:#eef6fc;
+  --red:#d06a6a;--redt:#ff9d9d;--redbg:#3a1f22;
+  --amber:#c99a45;--ambrt:#f2c46e;--ambrbg:#372a13;
+  --green:#5c9a5e;--grnt:#93d58e;--grnbg:#1c3020;
+  --blue:#4f86b5;--bluet:#a3cdf0;--bluebg:#1b2d40;
+  --grid:rgba(255,255,255,.08);
+  --shadow:0 1px 2px rgba(0,0,0,.3);
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --bg:#eef1f5;--bg2:#ffffff;--bg3:#f2f4f8;
+  --border:rgba(0,0,0,.18);--border2:rgba(0,0,0,.09);
+  --text:#12161d;--text2:#454e5c;--text3:#252c37;
+  --accent:#2c6aa0;--accent-strong:#22578a;--on-accent:#fff;
+  --user-bubble:#2c6aa0;--user-text:#fff;
+  --red:#c0392b;--redt:#a11d1d;--redbg:#fde8e7;
+  --amber:#c08a1e;--ambrt:#8a5800;--ambrbg:#fff2d3;
+  --green:#3d8b40;--grnt:#1d6a22;--grnbg:#e2f3e2;
+  --blue:#3b78b0;--bluet:#1b5891;--bluebg:#e2edf8;
+  --grid:rgba(0,0,0,.08);
+  --shadow:0 1px 3px rgba(0,0,0,.08);
+  color-scheme:light;
+}
+html{-webkit-text-size-adjust:100%}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:1rem;line-height:1.5;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* Intestazione */
+.header{background:var(--bg2);border-bottom:1px solid var(--border);padding:.6rem 1rem;padding-top:max(.6rem,env(safe-area-inset-top));display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.header-left{display:flex;align-items:center;gap:.65rem;min-width:0}
+.avatar{width:2.4rem;height:2.4rem;border-radius:50%;background:var(--bluebg);border:1px solid var(--blue);display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:var(--bluet);flex-shrink:0}
+.header h1{font-size:1.1rem;font-weight:650;line-height:1.25}
+.header p{font-size:.8rem;color:var(--text2)}
+.header-right{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap}
+.btn{background:var(--bg2);border:1px solid var(--border);border-radius:.55rem;padding:.4rem .7rem;font-size:.85rem;cursor:pointer;color:var(--text3);display:inline-flex;align-items:center;gap:.3rem;min-height:2.4rem;white-space:nowrap}
+.btn:hover{background:var(--bg3)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-icon{min-width:2.4rem;justify-content:center;font-weight:700}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn-primary:hover{background:var(--accent-strong)}
+@media(max-width:640px){.header p{display:none}.btn-label{display:none}}
+
+/* Home */
+#home{flex:1;padding:1rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,13.5rem),1fr));gap:.75rem;align-content:start;max-width:72rem;width:100%;margin:0 auto}
+@media(max-width:640px){#home{grid-template-columns:repeat(auto-fill,minmax(min(100%,9.4rem),1fr));padding:.75rem;gap:.6rem}}
+.tile{background:var(--bg2);border:1px solid var(--border);border-radius:.85rem;padding:.9rem;cursor:pointer;display:flex;flex-direction:column;gap:.35rem;position:relative;min-height:8.5rem;text-align:left;box-shadow:var(--shadow);transition:border-color .15s,background .15s}
+.tile:hover{border-color:var(--accent);background:var(--bg3)}
+.tile-icon{font-size:1.5rem;line-height:1}
+.tile-title{font-size:1.02rem;font-weight:650;line-height:1.3;color:var(--text)}
+.tile-sub{font-size:.85rem;color:var(--text2);flex:1;line-height:1.35}
+.tile-badges{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:auto;padding-right:1rem}
+.tile-arrow{position:absolute;bottom:.7rem;right:.8rem;font-size:1.1rem;color:var(--text2)}
+.welcome{grid-column:1/-1;background:var(--bg2);border:1px solid var(--border);border-radius:.85rem;padding:1.4rem;max-width:40rem;margin:2rem auto;line-height:1.6}
+.welcome h2{font-size:1.3rem;margin-bottom:.5rem}
+.welcome p{color:var(--text3);margin-bottom:.8rem}
+
+/* Etichette e semafori (colore + simbolo) */
+.tag{display:inline-block;border-radius:.3rem;padding:.05rem .45rem;font-size:.75rem;font-weight:650;line-height:1.5;border:1px solid transparent}
+.tag-red{background:var(--redbg);color:var(--redt);border-color:var(--red)}
+.tag-amber{background:var(--ambrbg);color:var(--ambrt);border-color:var(--amber)}
+.tag-green{background:var(--grnbg);color:var(--grnt);border-color:var(--green)}
+.tag-blue{background:var(--bluebg);color:var(--bluet);border-color:var(--blue)}
+.dot{width:1.3rem;height:1.3rem;border-radius:50%;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;line-height:1;color:#fff;margin-top:.1rem}
+.dot-green{background:var(--green)}.dot-green::after{content:'✓'}
+.dot-amber{background:var(--amber)}.dot-amber::after{content:'!'}
+.dot-red{background:var(--red)}.dot-red::after{content:'✕'}
+.dot-blue{width:.6rem;height:.6rem;margin:.45rem .35rem 0;background:var(--blue)}
+
+/* Pannello */
+#panel{display:none;flex:1;flex-direction:column}
+#panel.open{display:flex}
+.panel-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:.6rem 1rem;display:flex;align-items:center;gap:.65rem;position:sticky;top:0;z-index:15}
+.panel-title{font-size:1.05rem;font-weight:650;flex:1;line-height:1.3}
+.panel-body{flex:1;padding:1rem}
+.panel-content{max-width:50rem;margin:0 auto;display:flex;flex-direction:column;gap:.85rem;padding-bottom:2rem}
+.block{background:var(--bg2);border:1px solid var(--border);border-radius:.7rem;padding:.95rem;box-shadow:var(--shadow)}
+.block-title{font-size:.8rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.6rem}
+.block-warn{border-color:var(--amber);background:var(--ambrbg)}
+.block-warn .block-title{color:var(--ambrt)}
+.text{font-size:.95rem;color:var(--text3);line-height:1.6}
+.text-small{font-size:.85rem;color:var(--text2);line-height:1.55}
+.text strong,.row-text strong{color:var(--text);font-weight:650}
+.row{display:flex;align-items:flex-start;gap:.6rem;padding:.55rem 0;border-bottom:1px solid var(--border2)}
+.row:last-child{border-bottom:none;padding-bottom:0}
+.row:first-child{padding-top:0}
+.row-text{font-size:.95rem;color:var(--text3);line-height:1.5;flex:1;min-width:0}
+.row-note{display:block;color:var(--text2);font-size:.85rem;margin-top:.1rem}
+.cal-date{min-width:3.3rem;text-align:center;border-radius:.5rem;padding:.3rem;border:1px solid var(--border);flex-shrink:0}
+.cal-day{font-size:1.05rem;font-weight:700;line-height:1.1}
+.cal-mon{font-size:.7rem;color:var(--text2);text-transform:uppercase}
+.cal-title{font-size:.95rem;font-weight:650}
+.cal-sub{font-size:.85rem;color:var(--text2)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,8.2rem),1fr));gap:.5rem}
+.cards-wide{grid-template-columns:repeat(auto-fill,minmax(min(100%,11rem),1fr))}
+.card{background:var(--bg3);border:1px solid var(--border);border-radius:.55rem;padding:.55rem .65rem}
+.card.warn{border-color:var(--amber);background:var(--ambrbg)}
+.card.ok{border-color:var(--green);background:var(--grnbg)}
+.card-label{font-size:.8rem;color:var(--text2);line-height:1.3}
+.card.warn .card-label{color:var(--ambrt)}.card.warn .card-label::before{content:'! ';font-weight:800}
+.card.ok .card-label{color:var(--grnt)}.card.ok .card-label::before{content:'✓ ';font-weight:800}
+.card-value{font-size:1.3rem;font-weight:700;line-height:1.3;overflow-wrap:anywhere}
+.card.warn .card-value{color:var(--ambrt)}.card.ok .card-value{color:var(--grnt)}
+.card-ref{font-size:.75rem;color:var(--text2);margin-top:.1rem;line-height:1.35}
+.card-name{font-size:.95rem;font-weight:650;margin-bottom:.1rem}
+.card-dose{font-size:.85rem;color:var(--text2)}
+.card-note{font-size:.8rem;color:var(--ambrt);margin-top:.2rem}
+.eyes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr));gap:.6rem}
+.eye{border-radius:.55rem;padding:.65rem .75rem;border:1px solid}
+.eye-label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.2rem}
+.eye-status{font-size:.95rem;font-weight:600}
+.chart-wrap{position:relative;width:100%;height:13rem}
+.legend-line{font-size:.8rem;color:var(--text2);line-height:1.8}
+.acc-head{width:100%;background:none;border:none;padding:.8rem .95rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;text-align:left;font-size:.95rem;font-weight:650}
+.acc-body{display:none;padding:0 .95rem .8rem}
+.acc-open .acc-body{display:block}
+.acc-chev{color:var(--text2);transition:transform .15s}
+.acc-open .acc-chev{transform:rotate(180deg)}
+.ref{border-top:1px solid var(--border2);padding:.65rem 0}
+.ref-top{display:flex;justify-content:space-between;gap:.5rem;margin-bottom:.25rem;flex-wrap:wrap}
+.ref-date{font-size:.85rem;font-weight:700;color:var(--bluet)}
+.ref-where{font-size:.8rem;color:var(--text2)}
+.btn-soft{background:var(--bluebg);color:var(--bluet);border:1px solid var(--blue);border-radius:.45rem;padding:.3rem .65rem;font-size:.8rem;font-weight:650;cursor:pointer;white-space:nowrap;min-height:2.1rem}
+.btn-soft:hover{filter:brightness(1.1)}
+
+/* Chat AI */
+.messages{display:flex;flex-direction:column;gap:.45rem;max-height:65vh;overflow-y:auto;margin-bottom:.5rem}
+.messages:empty{display:none}
+.msg{padding:.6rem .85rem;border-radius:.6rem;font-size:.95rem;line-height:1.6;max-width:90%;overflow-wrap:anywhere}
+.msg-user{background:var(--user-bubble);color:var(--user-text);align-self:flex-end;border-bottom-right-radius:.15rem;white-space:pre-wrap}
+.msg-ai{background:var(--bg3);align-self:flex-start;border:1px solid var(--border);border-bottom-left-radius:.15rem;max-width:100%}
+.msg-ai p{margin-bottom:.45rem}.msg-ai p:last-child{margin-bottom:0}
+.msg-ai strong{font-weight:700}
+.msg-ai ul,.msg-ai ol{margin:.25rem 0 .45rem 1.3rem}
+.msg-ai li{margin-bottom:.2rem}
+.msg-ai h3{font-size:1rem;font-weight:700;margin:.6rem 0 .25rem;color:var(--bluet)}
+.msg-ai hr{border:none;border-top:1px solid var(--border);margin:.6rem 0}
+.msg-tools{display:flex;gap:.35rem;align-self:flex-start;margin:-.1rem 0 .3rem .1rem}
+.msg-tools button{background:none;border:1px solid var(--border);border-radius:.4rem;padding:.15rem .55rem;font-size:.8rem;color:var(--text2);cursor:pointer;min-height:2rem}
+.msg-loading{color:var(--text2);font-style:italic;font-size:.88rem;align-self:flex-start;padding:.5rem .75rem;white-space:pre-wrap;background:var(--bg3);border-radius:.6rem;border:1px dashed var(--border);max-width:100%}
+.quick{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.6rem}
+.quick button{background:var(--bg3);border:1px solid var(--border);border-radius:.45rem;padding:.35rem .65rem;font-size:.85rem;color:var(--text3);cursor:pointer;min-height:2.3rem;text-align:left}
+.quick button:hover{border-color:var(--accent)}
+.chat-row{display:flex;gap:.4rem;align-items:flex-end}
+.chat-row textarea{flex:1;border:1px solid var(--border);border-radius:.55rem;padding:.55rem .65rem;font:inherit;font-size:max(16px,.95rem);background:var(--bg3);color:var(--text);outline:none;resize:none;min-height:2.7rem;max-height:10rem;line-height:1.4}
+.chat-row textarea:focus{border-color:var(--accent)}
+.chat-hint{font-size:.75rem;color:var(--text2);margin-top:.3rem}
+
+/* Finestra modifica */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:flex-end;justify-content:center}
+@media(min-width:640px){.modal-overlay{align-items:center}}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border-radius:1rem 1rem 0 0;padding:1.1rem;width:100%;max-height:90vh;overflow-y:auto;border:1px solid var(--border)}
+@media(min-width:640px){.modal{border-radius:.85rem;max-width:40rem}}
+.modal h2{font-size:1.1rem;margin-bottom:.5rem}
+.modal textarea{width:100%;height:14rem;font-size:.8rem;font-family:ui-monospace,Consolas,monospace;border:1px solid var(--border);border-radius:.5rem;padding:.5rem;background:var(--bg3);color:var(--text);resize:vertical}
+.modal-btns{display:flex;gap:.4rem;margin-top:.6rem;flex-wrap:wrap}
+.modal-btns.end{justify-content:flex-end}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <div class="avatar" id="hdr-avatar" aria-hidden="true">?</div>
+    <div style="min-width:0">
+      <h1 id="hdr-nome">Dashboard Medico</h1>
+      <p id="hdr-info"></p>
+    </div>
+  </div>
+  <div class="header-right">
+    <button class="btn" id="btn-riepilogo" onclick="openRiepilogo()" title="Riepilogo per il medico">📋 <span class="btn-label">Riepilogo medico</span></button>
+    <button class="btn" onclick="openEdit()" title="Modifica, importa o esporta il profilo">✏️ <span class="btn-label">Modifica</span></button>
+    <button class="btn btn-icon" onclick="changeScale(-1)" title="Testo più piccolo" aria-label="Testo più piccolo">A−</button>
+    <button class="btn btn-icon" onclick="changeScale(1)" title="Testo più grande" aria-label="Testo più grande">A+</button>
+    <button class="btn btn-icon" onclick="toggleTheme()" title="Tema chiaro/scuro" aria-label="Cambia tema chiaro/scuro" id="btn-tema">☀️</button>
+  </div>
+</header>
+
+<main id="home"></main>
+
+<section id="panel" aria-live="polite">
+  <div class="panel-header">
+    <button class="btn" onclick="goBack()">← Indietro</button>
+    <h2 class="panel-title" id="panel-title"></h2>
+  </div>
+  <div class="panel-body">
+    <div class="panel-content" id="panel-content"></div>
+  </div>
+</section>
+
+<div class="modal-overlay" id="editModal" role="dialog" aria-modal="true" aria-labelledby="editTitle">
+  <div class="modal">
+    <h2 id="editTitle">Profilo clinico</h2>
+    <p class="text-small" style="margin-bottom:.4rem">Modifica il profilo (formato JSON) e premi Salva: i riquadri e l'AI si aggiornano, e le modifiche restano salvate in questo browser.</p>
+    <p class="text-small" id="profileStatus" style="margin-bottom:.5rem"></p>
+    <textarea id="profileEditor" spellcheck="false"></textarea>
+    <div class="modal-btns">
+      <button class="btn" onclick="exportProfile('json')">⬇️ Esporta JSON</button>
+      <button class="btn" onclick="exportProfile('js')">⬇️ Esporta dati_profilo.js</button>
+      <button class="btn" onclick="document.getElementById('profileImport').click()">⬆️ Importa</button>
+      <button class="btn" onclick="copiaProfilo()">📋 Copia per Claude</button>
+      <button class="btn" id="btn-reset" onclick="resetProfile()">↺ Torna ai dati del file</button>
+      <button class="btn" onclick="setAppToken()">🔑 Chiave accesso AI</button>
+      <input type="file" id="profileImport" accept=".json,.js,application/json,text/javascript" style="display:none" onchange="importProfile(this)">
+    </div>
+    <div class="modal-btns end">
+      <button class="btn" onclick="closeEdit()">Chiudi</button>
+      <button class="btn btn-primary" onclick="saveEdit()">Salva</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===================== Configurazione =====================
+var WORKER_URL = 'https://holy-band-5ed2.pasca2009.workers.dev/';
+var AI_MODEL = 'claude-opus-5-5';
+var AI_EFFORT = 'medium';
+var PROFILE_KEY = 'dashboard_medico_profile_v2', TOKEN_KEY = 'dashboard_medico_token_v1';
+var SCALE_STEPS = [14, 15, 16, 17, 18.5, 20, 22, 24], SCALE_DEFAULT = 17;
+
+function storeGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function storeSet(k,v){try{localStorage.setItem(k,v);return true;}catch(e){return false;}}
+function storeDel(k){try{localStorage.removeItem(k);}catch(e){}}
+
+// ===================== Utilità =====================
+function mk(t,c,txt){var d=document.createElement(t);if(c)d.className=c;if(txt!=null)d.textContent=txt;return d;}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+// Testo sicuro con **grassetto**
+function fmt(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');}
+// 11114 → "11.114"; anche dentro testi tipo "11114/giorno"
+function numFmt(v){return String(v).replace(/d{4,}(?:.d+)?/g,function(n){return Number(n).toLocaleString('it-IT');});}
+function arr(x){return Array.isArray(x)?x:[];}
+function obj(x){return x&&typeof x==='object'&&!Array.isArray(x)?x:{};}
+function clone(x){return JSON.parse(JSON.stringify(x));}
+function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+function rootPx(){return parseFloat(getComputedStyle(document.documentElement).fontSize)||SCALE_DEFAULT;}
+var STATO_TAG={green:'tag-green',amber:'tag-amber',red:'tag-red',blue:'tag-blue',ok:'tag-green',warn:'tag-amber'};
+function tag(text,color){return mk('span','tag '+(STATO_TAG[color]||'tag-blue'),text);}
+function dot(stato){return mk('span','dot dot-'+({ok:'green',warn:'amber'}[stato]||stato||'blue'));}
+
+function block(title,cls){var b=mk('div','block'+(cls?' '+cls:''));if(title)b.appendChild(mk('div','block-title',title));return b;}
+function para(text,cls){var p=mk('p',cls||'text');p.innerHTML=fmt(text);return p;}
+function textBlock(title,text){var b=block(title);b.appendChild(para(text));return b;}
+function row(stato,text,note,extra){
+  var r=mk('div','row');r.appendChild(dot(stato));
+  var t=mk('div','row-text');t.innerHTML=fmt(text)+(note?'<span class="row-note">'+fmt(note)+'</span>':'');
+  if(extra)t.appendChild(extra);r.appendChild(t);return r;
+}
+function cardGrid(items,wide){
+  var g=mk('div','cards'+(wide?' cards-wide':''));
+  items.forEach(function(i){var c=mk('div','card'+(i.stato?' '+i.stato:''));
+    c.appendChild(mk('div','card-label',i.label));
+    c.appendChild(mk('div','card-value',i.value==null||i.value===''?'—':numFmt(i.value)));
+    if(i.ref)c.appendChild(mk('div','card-ref',i.ref));g.appendChild(c);});
+  return g;
+}
+
+// ===================== Profilo: caricamento =====================
+var FILE_PROFILE = (window.PROFILO_INIZIALE && typeof window.PROFILO_INIZIALE==='object') ? clone(window.PROFILO_INIZIALE) : null;
+var profile = null, profileSavedAt = null, savedBase = null;
+
+function loadProfile(){
+  var raw=storeGet(PROFILE_KEY),saved=null;
+  if(raw){try{saved=JSON.parse(raw);if(!saved||!saved.profile||typeof saved.profile!=='object')saved=null;}catch(e){saved=null;}}
+  if(saved){
+    profile=saved.profile;profileSavedAt=saved.savedAt||null;savedBase=saved.base||null;
+    var fv=FILE_PROFILE&&FILE_PROFILE._versione;
+    if(fv&&fv!==savedBase){
+      if(confirm('Il file dei dati (dati_profilo.js) è stato aggiornato (versione '+fv+').\n\nOK = usa i dati nuovi del file (le modifiche salvate in questo browser vengono sostituite).\nAnnulla = tieni le tue modifiche.')){
+        storeDel(PROFILE_KEY);profile=clone(FILE_PROFILE);profileSavedAt=null;savedBase=null;
+      } else {savedBase=fv;storeSet(PROFILE_KEY,JSON.stringify({savedAt:profileSavedAt,base:fv,profile:profile}));}
+    }
+  } else if(FILE_PROFILE){profile=clone(FILE_PROFILE);}
+}
+
+// ===================== AI =====================
+var SYSTEM_PROMPT = "Sei il medico consulente personale di {NOME}, {ETA} anni. Esperto multidisciplinare: medicina generale, cardiologia, oculistica, ORL, ortopedia, dermatologia, endocrinologia, pneumologia.\n\nPROFILO CLINICO COMPLETO:\n{PROFILE}\n\nCOME RISPONDERE:\n1. ESAUSTIVITÀ: una sola risposta completa e autosufficiente. Non frammentare, non rimandare, approfondisci subito.\n2. RAGIONA SUL SUO CASO: collega sempre ai suoi dati reali (valori, referti, patologie, terapia). Se un dato manca, dillo.\n3. COLLEGA GLI APPARATI: se una domanda ha implicazioni su altri organi, evidenzialo.\n4. STRUTTURA: titoli e paragrafi, prosa che spiega il perché, non solo il cosa.\n5. WEB SEARCH: per novità terapeutiche/linee guida usa la ricerca web e cita le fonti con data.\n6. CONCRETEZZA: chiudi indicando cosa monitorare, cosa chiedere allo specialista, cosa manca.\n7. ONESTÀ: segnala incertezze e limiti. Le decisioni terapeutiche spettano ai medici reali.\nRispondi in italiano, chiaro ma clinicamente preciso.";
+
+var SECTION_CTX = {
+  alerts:"Rispondi su ALERT e situazioni da monitorare.",cal:"Rispondi su CALENDARIO e scadenze.",
+  farm:"Rispondi su FARMACI e INTEGRATORI.",esami:"Rispondi su ESAMI e loro andamento.",
+  vacc:"Rispondi su VACCINAZIONI.",macula:"Rispondi su OCCHI e vista.",
+  patologie:"Rispondi su PATOLOGIE ATTIVE.",storia:"Rispondi su STORIA e referti.",
+  schiena:"Rispondi su SCHIENA e rachide.",riepilogo:"Genera RIEPILOGO per il medico.",
+  cruscotto:"Rispondi sul CRUSCOTTO salute e indicatori generali.",palestra:"Rispondi su ALLENAMENTO, carichi e progressi in palestra.",
+  vitali:"Rispondi sui PARAMETRI VITALI rilevati da Apple Watch (frequenza cardiaca a riposo, HRV, sonno, SpO2, passi) e su come si collegano al quadro clinico generale (es. pressione, situazione cardiovascolare, dolore posturale notturno, pneumologia).",
+  detail:"Approfondisci la voce specifica richiesta.",refdetail:"Approfondisci il referto specifico."
+};
+
+var chatHistories = {}, charts = [], panelStack = [];
+
+// Il system prompt resta identico per tutte le sezioni (così la cache dell'API lo riutilizza);
+// il contesto della sezione viaggia a parte.
+function getSystem(){
+  var data=JSON.stringify(profile,function(k,v){return (k==='schede_home'||k==='_versione')?undefined:v;});
+  return SYSTEM_PROMPT.replace('{NOME}',profile.nome||'il paziente').replace('{ETA}',profile.eta||'?').replace('{PROFILE}',data);
+}
+
+function parseMarkdown(text){
+  var s=esc(text).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/(^|[^*])\*([^*\n]+)\*/g,'$1<em>$2</em>');
+  var lines=s.split('\n'),out=[],list=null;
+  function close(){if(list){out.push('</'+list+'>');list=null;}}
+  for(var i=0;i<lines.length;i++){var l=lines[i],ul=l.match(/^\s*[\*\-•] (.+)/),ol=l.match(/^\s*\d+[\.\)] (.+)/),h=l.match(/^#{1,4} (.+)/);
+    if(ul){if(list!=='ul'){close();out.push('<ul>');list='ul';}out.push('<li>'+ul[1]+'</li>');}
+    else if(ol){if(list!=='ol'){close();out.push('<ol>');list='ol';}out.push('<li>'+ol[1]+'</li>');}
+    else{close();if(h)out.push('<h3>'+h[1]+'</h3>');else if(/^\s*(-{3,}|_{3,})\s*$/.test(l))out.push('<hr>');else if(l.trim()!=='')out.push('<p>'+l+'</p>');}}
+  close();return out.join('');
+}
+
+function addMsg(id,role,text){
+  var msgs=document.getElementById('msgs-'+id);if(!msgs)return;
+  var d=mk('div','msg '+(role==='user'?'msg-user':'msg-ai'));
+  if(role==='ai')d.innerHTML=parseMarkdown(text);else d.textContent=text;
+  msgs.appendChild(d);
+  if(role==='ai'){
+    var bar=mk('div','msg-tools');
+    var cp=mk('button','','📄 Copia');cp.addEventListener('click',function(){copyText(text,cp,'📄 Copia');});
+    var dl=mk('button','','⬇️ Scarica');dl.addEventListener('click',function(){downloadText(id+'.txt',text);});
+    var pr=mk('button','','🖨️ Stampa');pr.addEventListener('click',function(){printReport(text,document.getElementById('panel-title').textContent);});
+    bar.appendChild(cp);bar.appendChild(dl);bar.appendChild(pr);msgs.appendChild(bar);
+  }
+  msgs.scrollTop=msgs.scrollHeight;
+}
+function copyText(t,btn,label){
+  if(!navigator.clipboard){alert('Copia non disponibile in questo browser.');return;}
+  navigator.clipboard.writeText(t).then(function(){if(btn){btn.textContent='✅ Copiato';setTimeout(function(){btn.textContent=label;},1500);}}).catch(function(){alert('Copia non riuscita.');});
+}
+function addLoading(id){var m=document.getElementById('msgs-'+id);if(!m)return;var d=mk('div','msg-loading','Elaborazione…');d.id='loading-'+id;m.appendChild(d);m.scrollTop=m.scrollHeight;}
+function removeLoading(id){var e=document.getElementById('loading-'+id);if(e)e.remove();}
+function showPartial(id,t){var e=document.getElementById('loading-'+id);if(!e)return;e.textContent=t||'Elaborazione…';var m=document.getElementById('msgs-'+id);if(m)m.scrollTop=m.scrollHeight;}
+
+function sendMsg(id){
+  var inp=document.getElementById('input-'+id),btn=document.getElementById('btn-'+id);
+  if(!inp||!profile)return;var text=inp.value.trim();if(!text)return;
+  inp.value='';autoGrow(inp);if(btn)btn.disabled=true;
+  addMsg(id,'user',text);
+  if(!chatHistories[id])chatHistories[id]=[];
+  chatHistories[id].push({role:'user',content:text});
+  addLoading(id);
+  askAI(id,chatHistories[id])
+  .then(function(reply){removeLoading(id);addMsg(id,'ai',reply.text);var h=chatHistories[id];if(h){if(reply.ok)h.push({role:'assistant',content:reply.text});else h.pop();}})
+  .catch(function(e){removeLoading(id);if(chatHistories[id])chatHistories[id].pop();addMsg(id,'ai','Errore di connessione: '+e.message);})
+  .finally(function(){var b=document.getElementById('btn-'+id);if(b)b.disabled=false;});
+}
+
+// Chiama il Worker in streaming. Se la ricerca web mette in pausa il turno (pause_turn)
+// lo riprende rimandando il contenuto parziale; nello storico resta solo il testo finale.
+function askAI(id,history){
+  var headers={'Content-Type':'application/json'},tok=storeGet(TOKEN_KEY);
+  if(tok)headers['X-App-Token']=tok;
+  var system=getSystem(),ctx='CONTESTO: '+(SECTION_CTX[id]||''),msgs=history.slice(),acc=[],text='',live='',status='Invio della domanda…',t0=Date.now();
+  function refresh(){showPartial(id,status+'  ⏱ '+Math.round((Date.now()-t0)/1000)+' s'+(live?'\n\n'+live:''));}
+  var timer=setInterval(refresh,1000);refresh();
+  function call(round){
+    return fetch(WORKER_URL,{method:'POST',headers:headers,body:JSON.stringify({
+      model:AI_MODEL,max_tokens:16000,system:system,system_context:ctx,output_config:{effort:AI_EFFORT},
+      tools:[{type:'web_search_20260209',name:'web_search',max_uses:5}],messages:msgs})})
+    .then(function(r){
+      if(r.status===401||r.status===403)return {ok:false,text:'Accesso al server AI negato. Imposta la chiave da ✏️ Modifica → 🔑 Chiave accesso AI.'};
+      if(r.status===524)return {ok:false,text:'Il server ha impiegato troppo tempo (errore 524). Verifica di aver pubblicato su Cloudflare l\'ultima versione di worker.js.'};
+      if((r.headers.get('Content-Type')||'').indexOf('text/event-stream')>=0&&r.body)return readStream(r,function(t){live=text+t;status='Sta scrivendo la risposta…';refresh();},function(st){status=st;refresh();});
+      return r.json().catch(function(){return {error:{message:'HTTP '+r.status}};});})
+    .then(function(d){
+      if(d.ok===false)return d;
+      if(d.error)return {ok:false,text:'Errore: '+(d.error.message||JSON.stringify(d.error))};
+      (d.content||[]).forEach(function(b){if(b.type==='text')text+=b.text;});
+      if(d.stop_reason==='refusal')return {ok:false,text:(text?text+'\n\n':'')+'La richiesta è stata bloccata dai filtri di sicurezza del modello. Prova a riformularla.'};
+      if(d.stop_reason==='pause_turn'&&round<3){acc=acc.concat(d.content||[]);msgs=history.concat([{role:'assistant',content:acc}]);return call(round+1);}
+      if(d.stop_reason==='max_tokens')text+='\n\n*(Risposta troncata per lunghezza.)*';
+      return text?{ok:true,text:text}:{ok:false,text:'Nessuna risposta.'};
+    });
+  }
+  return call(0).finally(function(){clearInterval(timer);});
+}
+
+// Legge la risposta in streaming (Server-Sent Events) e ricostruisce il messaggio
+// completo, con la stessa forma di una risposta normale: {content, stop_reason}.
+function readStream(r,onText,onStatus){
+  var reader=r.body.getReader(),dec=new TextDecoder(),buf='',msg={content:[],stop_reason:null},blocks=[],json=[],text='';
+  function handle(ev){
+    switch(ev.type){
+      case 'message_start':onStatus('Sta ragionando sul tuo caso…');if(ev.message&&ev.message.stop_reason)msg.stop_reason=ev.message.stop_reason;break;
+      case 'content_block_start':blocks[ev.index]=ev.content_block;json[ev.index]='';var cb=ev.content_block||{};
+        if(cb.type==='thinking')onStatus('Sta ragionando sul tuo caso…');
+        else if(cb.type==='server_tool_use')onStatus('Sta cercando sul web…');
+        else if(cb.type==='web_search_tool_result')onStatus('Sta leggendo i risultati della ricerca…');
+        break;
+      case 'content_block_delta':var b=blocks[ev.index],d=ev.delta;if(!b)break;
+        if(d.type==='text_delta'){b.text=(b.text||'')+d.text;text+=d.text;onText(text);}
+        else if(d.type==='input_json_delta')json[ev.index]+=d.partial_json;
+        else if(d.type==='thinking_delta')b.thinking=(b.thinking||'')+d.thinking;
+        else if(d.type==='signature_delta')b.signature=d.signature;
+        break;
+      case 'content_block_stop':var bb=blocks[ev.index];if(bb&&json[ev.index]){try{bb.input=JSON.parse(json[ev.index]);}catch(e){}}
+        if(bb&&bb.type==='server_tool_use'&&bb.input&&bb.input.query)onStatus('Sta cercando sul web: "'+bb.input.query+'"…');break;
+      case 'message_delta':if(ev.delta&&ev.delta.stop_reason)msg.stop_reason=ev.delta.stop_reason;break;
+      case 'error':msg.error=ev.error||{message:'Errore durante lo streaming'};break;
+    }
+  }
+  function pump(){
+    return reader.read().then(function(res){
+      if(res.value)buf+=dec.decode(res.value,{stream:!res.done});
+      var parts=buf.split(/\r?\n\r?\n/);buf=res.done?'':parts.pop();
+      parts.forEach(function(p){var data=p.split(/\r?\n/).filter(function(l){return l.indexOf('data:')===0;}).map(function(l){return l.slice(5).trim();}).join('');
+        if(data){try{handle(JSON.parse(data));}catch(e){}}});
+      if(res.done){msg.content=blocks.filter(Boolean);if(!msg.stop_reason&&!msg.error)msg.error={message:'Connessione interrotta prima della fine della risposta.'};return msg;}
+      return pump();
+    });
+  }
+  return pump();
+}
+
+var TOUCH = window.matchMedia && matchMedia('(pointer:coarse)').matches;
+function autoGrow(t){t.style.height='auto';t.style.height=Math.min(t.scrollHeight,rootPx()*10)+'px';}
+function buildChat(id,quick,c,opts){
+  opts=opts||{};
+  var b=block(opts.title||'Chiedi all\'AI');
+  if(quick&&quick.length){var qb=mk('div','quick');
+    quick.forEach(function(q){var bn=mk('button','',q);bn.addEventListener('click',function(){var inp=document.getElementById('input-'+id);if(inp){inp.value=q;sendMsg(id);}});qb.appendChild(bn);});
+    b.appendChild(qb);}
+  var msgs=mk('div','messages');msgs.id='msgs-'+id;if(opts.tall)msgs.style.maxHeight='75vh';b.appendChild(msgs);
+  var r=mk('div','chat-row');
+  var inp=mk('textarea');inp.id='input-'+id;inp.rows=1;inp.placeholder='Scrivi una domanda…';inp.setAttribute('aria-label','Domanda per l\'AI');
+  inp.addEventListener('input',function(){autoGrow(inp);});
+  inp.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey&&!TOUCH){e.preventDefault();sendMsg(id);}});
+  var sb=mk('button','btn btn-primary','Invia');sb.id='btn-'+id;sb.addEventListener('click',function(){sendMsg(id);});
+  r.appendChild(inp);r.appendChild(sb);b.appendChild(r);
+  if(!TOUCH)b.appendChild(mk('div','chat-hint','Invio per inviare · Maiusc+Invio per andare a capo'));
+  c.appendChild(b);
+  arr(chatHistories[id]).forEach(function(m){if(!m.hidden)addMsg(id,m.role==='user'?'user':'ai',typeof m.content==='string'?m.content:'');});
+}
+
+// ===================== Grafici =====================
+function destroyCharts(){charts.forEach(function(ch){try{ch.destroy();}catch(e){}});charts=[];}
+function lineChart(parent,labels,datasets,scales){
+  if(typeof Chart==='undefined'){parent.appendChild(mk('p','text-small','Grafico non disponibile (connessione assente).'));return;}
+  var w=mk('div','chart-wrap'),cv=mk('canvas');cv.setAttribute('role','img');cv.setAttribute('aria-label','Grafico: '+datasets.map(function(d){return d.label;}).join(', '));
+  w.appendChild(cv);parent.appendChild(w);
+  var tc=cssVar('--text2'),gc=cssVar('--grid'),fs=Math.round(rootPx()*.72);
+  var ax=function(extra){return Object.assign({ticks:{color:tc,font:{size:fs}},grid:{color:gc}},extra||{});};
+  var sc={x:ax()};Object.keys(scales||{y:{}}).forEach(function(k){sc[k]=ax(scales[k]);});
+  datasets.forEach(function(d){d.pointRadius=d.pointRadius==null?4:d.pointRadius;d.cubicInterpolationMode='monotone';d.borderWidth=d.borderWidth||2.5;});
+  setTimeout(function(){charts.push(new Chart(cv,{type:'line',data:{labels:labels,datasets:datasets},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{labels:{color:tc,font:{size:fs},boxWidth:14}}},scales:sc}}));},30);
+}
+
+// ===================== Riquadri della home =====================
+function countBy(list,f){var n=0;list.forEach(function(x){if(f(x))n++;});return n;}
+function firstBold(s){var m=String(s||'').match(/\*\*(.+?)\*\*/);return m?m[1]:'';}
+var TILES=[
+  {id:'cruscotto',icon:'📊',title:'Cruscotto salute',info:function(p){var a=arr(obj(p.cruscotto).aree);
+    return {sub:'Indicatori per area · semafori',tags:[[countBy(a,function(x){return x.stato==='green';})+' ok','green'],[countBy(a,function(x){return x.stato==='amber';})+' da seguire','amber'],[countBy(a,function(x){return x.stato==='red';})+' da correggere','red']]};}},
+  {id:'alerts',icon:'⚠️',title:'Alert & panoramica',info:function(p){var a=arr(p.alert),t=[];
+    a.filter(function(x){return x.stato==='red';}).forEach(function(x){t.push([firstBold(x.testo).split(' ').slice(0,2).join(' ')||'Rosso','red']);});
+    t.push([countBy(a,function(x){return x.stato==='amber';})+' da seguire','amber']);t.push([countBy(a,function(x){return x.stato==='green';})+' ok','green']);
+    return {sub:'Situazioni attive da monitorare',tags:t};}},
+  {id:'cal',icon:'📅',title:'Calendario visite',info:function(p){var c=arr(p.calendario),next=c.filter(function(x){return x.stato==='programmato';})[0];
+    return {sub:next?'Prossima: '+next.titolo+' · '+[next.giorno,next.mese].join(' ').trim():'Visite e scadenze',
+      tags:[[countBy(c,function(x){return x.stato==='fatto';})+' fatte','green'],[countBy(c,function(x){return x.stato!=='fatto';})+' da fare','red']]};}},
+  {id:'farm',icon:'💊',title:'Farmaci & integratori',info:function(p){var f=arr(p.terapia_cronica),n=countBy(f,function(x){return x.note;});
+    return {sub:f.length+' farmaci cronici · '+arr(p.integratori).length+' integratori',tags:n?[[n+' da rivalutare','amber']]:[['in ordine','green']]};}},
+  {id:'esami',icon:'🧪',title:'Ultimi esami',info:function(p){var e=arr(p.ultimi_esami),y=arr(p.storico_col_tot).map(function(x){var m=String(x.data).match(/\d{4}/);return m&&m[0];}).filter(Boolean);
+    var w=e.filter(function(x){return x.stato==='warn';}).map(function(x){return x.nome;});
+    return {sub:(p.ultimi_esami_data||'')+(y.length?' · storico '+y[0]+'-'+y[y.length-1]:''),tags:[[countBy(e,function(x){return x.stato==='ok';})+' ok','green']].concat(w.length?[[w.slice(0,3).join(', '),'amber']]:[])};}},
+  {id:'vacc',icon:'💉',title:'Vaccinazioni',info:function(p){var v=arr(p.vaccinazioni),f=countBy(v,function(x){return x.fatta;});
+    return {sub:f+' fatte · '+(v.length-f)+' da valutare',tags:[[f+' ok','green'],[(v.length-f)+' da valutare','amber']]};}},
+  {id:'macula',icon:'👁️',title:'Occhi',info:function(){return {sub:'Stato, storia e controlli',tags:[]};}},
+  {id:'schiena',icon:'🦴',title:'Schiena',info:function(){return {sub:'Stato, storia e follow-up',tags:[]};}},
+  {id:'patologie',icon:'🩺',title:'Patologie attive',info:function(p){var g=obj(p.patologie_attive),k=Object.keys(g),n=0;k.forEach(function(x){n+=arr(g[x]).length;});
+    return {sub:n+' voci in '+k.length+' specialità',tags:[[k.length+' aree','blue']]};}},
+  {id:'storia',icon:'📖',title:'Archivio referti',info:function(p){var a=obj(p.referti_archivio),k=Object.keys(a),n=0;k.forEach(function(x){n+=arr(a[x]).length;});
+    return {sub:'Tutti i referti per specialità',tags:[[k.length+' aree','blue'],[n+' referti','blue']]};}},
+  {id:'palestra',icon:'🏋️',title:'Palestra',info:function(p){var i=obj(obj(p.palestra).indicatori_mese_corrente);
+    return {sub:'Allenamenti, carichi, progressi',tags:i.frequenza?[[i.frequenza,'green']]:[]};}},
+  {id:'vitali',icon:'⌚',title:'Parametri vitali',info:function(p){var a=obj(p.apple_watch),w=0,fc=null;
+    arr(a.schede).forEach(function(s){arr(s.voci).forEach(function(v){if(v.stato==='warn')w++;if(v.nome==='FC riposo')fc=v.valore;});});
+    return {sub:'Apple Watch: FC, SpO2, equilibrio',tags:(fc!=null?[['FC '+fc,'green']]:[]).concat(w?[[w+' da seguire','amber']]:[])};}}
+];
+
+function renderHome(){
+  var home=document.getElementById('home');home.innerHTML='';
+  if(!profile){
+    var w=mk('div','welcome');
+    w.appendChild(mk('h2','','Benvenuto nella Dashboard Medico'));
+    w.appendChild(mk('p','','Su questo dispositivo non ci sono ancora dati. Puoi caricarli in due modi:'));
+    var ul=mk('ul','');ul.style.cssText='margin:0 0 1rem 1.2rem;color:var(--text3)';
+    ul.appendChild(mk('li','','importa il file dei tuoi dati (dati_profilo.js oppure un file JSON esportato);'));
+    ul.appendChild(mk('li','','oppure metti il file dati_profilo.js nella stessa cartella di questa pagina e ricaricala.'));
+    w.appendChild(ul);
+    var b=mk('button','btn btn-primary','⬆️ Importa i miei dati');b.addEventListener('click',function(){document.getElementById('profileImport').click();});w.appendChild(b);
+    home.appendChild(w);return;
+  }
+  var over=obj(profile.schede_home);
+  TILES.forEach(function(t){
+    var info;try{info=t.info(profile);}catch(e){info={sub:'',tags:[]};}
+    var o=obj(over[t.id]);if(o.sotto)info.sub=o.sotto;if(Array.isArray(o.etichette))info.tags=o.etichette;
+    var b=mk('button','tile');b.type='button';
+    b.appendChild(mk('div','tile-icon',t.icon));b.appendChild(mk('div','tile-title',o.titolo||t.title));b.appendChild(mk('div','tile-sub',info.sub||''));
+    var tg=mk('div','tile-badges');arr(info.tags).forEach(function(x){if(x&&x[0]&&!/^0 /.test(x[0]))tg.appendChild(tag(x[0],x[1]));});b.appendChild(tg);
+    b.appendChild(mk('span','tile-arrow','›'));
+    b.addEventListener('click',function(){openPanel(t.id);});
+    home.appendChild(b);
+  });
+}
+
+// ===================== Pannelli =====================
+var PANELS = {};
+
+PANELS.cruscotto={title:'📊 Cruscotto salute',quick:['Spiegami il mio livello di rischio cardiovascolare','Su cosa devo concentrarmi di più?','Come miglioro gli indicatori gialli?'],
+  render:function(c){var cr=obj(profile.cruscotto),aree=arr(cr.aree);
+    var intro=block();intro.appendChild(para('Indicatori per area, con semaforo: **✓ verde** = ok, **! giallo** = da seguire, **✕ rosso** = da correggere. Non è un punteggio unico — la salute non si riduce a un numero — ma una panoramica onesta area per area.','text-small'));c.appendChild(intro);
+    var b=block('Indicatori per area');aree.forEach(function(a){b.appendChild(row(a.stato,'**'+a.area+'** — '+a.valore,a.nota));});c.appendChild(b);
+    var s=block('Sintesi'),tg=mk('div','');tg.style.cssText='display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem';
+    [['green','verdi'],['amber','gialli'],['red','rossi']].forEach(function(x){tg.appendChild(tag(countBy(aree,function(a){return a.stato===x[0];})+' '+x[1],x[0]));});
+    s.appendChild(tg);if(cr.sintesi)s.appendChild(para(cr.sintesi));c.appendChild(s);
+    if(cr.rischio_cv)c.appendChild(textBlock('Rischio cardiovascolare',cr.rischio_cv));}};
+
+PANELS.alerts={title:'⚠️ Alert & panoramica',quick:['Quali sono le priorità tra le criticità aperte?','Come posso migliorare i valori fuori target?','Fai un quadro riassuntivo del mio stato'],
+  render:function(c){var b=block('Situazioni attive');
+    arr(profile.alert).forEach(function(a){var r=row(a.stato,a.testo);if(a.etichetta){var t=r.querySelector('.row-text');t.appendChild(document.createTextNode(' '));t.appendChild(tag(a.etichetta,a.stato));}b.appendChild(r);});
+    c.appendChild(b);}};
+
+PANELS.cal={title:'📅 Calendario visite',quick:['Che priorità do alle visite da fare?','Cosa chiedere alla prossima visita?'],
+  render:function(c){var b=block('Visite e scadenze');
+    var ST={fatto:['green','var(--grnbg)','var(--green)','var(--grnt)','Fatto'],programmato:['amber','var(--ambrbg)','var(--amber)','var(--ambrt)','Programmato'],da_fare:['red','var(--redbg)','var(--red)','var(--redt)','Da fare']};
+    arr(profile.calendario).forEach(function(i){var s=ST[i.stato]||ST.da_fare;
+      var r=mk('div','row'),cd=mk('div','cal-date');cd.style.cssText='background:'+s[1]+';border-color:'+s[2];
+      var dd=mk('div','cal-day',i.giorno||'?');dd.style.color=s[3];cd.appendChild(dd);cd.appendChild(mk('div','cal-mon',i.mese||''));
+      var ci=mk('div','row-text');ci.appendChild(mk('div','cal-title',i.titolo||''));ci.appendChild(mk('div','cal-sub',i.nota||''));
+      var st=tag(s[4],s[0]);st.style.marginTop='.25rem';ci.appendChild(st);
+      r.appendChild(cd);r.appendChild(ci);b.appendChild(r);});
+    c.appendChild(b);}};
+
+PANELS.farm={title:'💊 Farmaci & integratori',quick:['Interazioni tra farmaci e integratori?','Come e quando assumere gli integratori?','C\'è qualcosa di superfluo?'],
+  render:function(c){
+    var b1=block('Terapia cronica'),g1=mk('div','cards cards-wide');
+    arr(profile.terapia_cronica).forEach(function(p){var pc=mk('div','card'+(p.note?' warn':''));pc.appendChild(mk('div','card-name',p.nome));pc.appendChild(mk('div','card-dose',p.indicazione||''));
+      if(p.note)pc.appendChild(mk('div','card-note','⚠️ '+p.note));g1.appendChild(pc);});
+    b1.appendChild(g1);c.appendChild(b1);
+    var b2=block('Integratori'),g2=mk('div','cards cards-wide');
+    arr(profile.integratori).forEach(function(s){var parts=String(s).split(' - '),pc=mk('div','card');pc.appendChild(mk('div','card-name',parts[0]));pc.appendChild(mk('div','card-dose',parts.slice(1).join(' - ')));g2.appendChild(pc);});
+    b2.appendChild(g2);c.appendChild(b2);
+    var sos=arr(profile.integratori_sospesi);if(sos.length){var b3=block('Sospesi');sos.forEach(function(s){b3.appendChild(row('amber',s));});c.appendChild(b3);}
+    var cal=arr(profile.calendario_assunzione);if(cal.length){var bc=block('📅 Calendario giornaliero di assunzione');
+      cal.forEach(function(x){var r=mk('div','row');r.style.display='block';
+        var top=mk('div','');top.style.cssText='display:flex;justify-content:space-between;gap:.5rem;flex-wrap:wrap;margin-bottom:.15rem';
+        var ora=mk('span','',x.ora);ora.style.cssText='font-size:.8rem;font-weight:700;color:var(--bluet);text-transform:uppercase;letter-spacing:.03em';
+        var cosa=mk('span','',x.cosa);cosa.style.cssText='font-size:.95rem;font-weight:650';
+        top.appendChild(ora);top.appendChild(cosa);r.appendChild(top);
+        r.appendChild(mk('div','text','→ '+(x.modalita||'')));if(x.nota){var n=mk('div','text-small',x.nota);n.style.fontStyle='italic';r.appendChild(n);}
+        bc.appendChild(r);});c.appendChild(bc);}}};
+
+PANELS.esami={title:'🧪 Ultimi esami',quick:['Analizza i valori e le criticità','Ci sono valori da tenere d\'occhio?','Andamento del colesterolo nel tempo?'],
+  render:function(c){
+    document.getElementById('panel-title').textContent='🧪 Ultimi esami'+(profile.ultimi_esami_data?' — '+profile.ultimi_esami_data:'');
+    var b1=block('Valori'+(profile.ultimi_esami_data?' ('+profile.ultimi_esami_data+')':''));
+    b1.appendChild(cardGrid(arr(profile.ultimi_esami).map(function(e){return {label:e.nome,value:e.valore,stato:e.stato,ref:e.riferimento||(e.stato==='ok'?'nella norma':'')};})));c.appendChild(b1);
+    var st=arr(profile.storico_col_tot);if(st.length){var b2=block('Andamento colesterolo totale');
+      lineChart(b2,st.map(function(x){return x.data;}),[
+        {label:'Colesterolo totale',data:st.map(function(x){return x.val;}),borderColor:cssVar('--bluet'),backgroundColor:'transparent',fill:false},
+        {label:'Limite 200',data:st.map(function(){return 200;}),borderColor:cssVar('--grnt'),borderDash:[6,4],pointRadius:0,borderWidth:2}],
+        {y:{suggestedMin:100,suggestedMax:260}});
+      c.appendChild(b2);}}};
+
+PANELS.vacc={title:'💉 Vaccinazioni',quick:['Quali vaccini mi mancano e perché?','Quali richiami sono raccomandati per la mia età?'],
+  render:function(c){var b=block('Stato vaccinale');
+    arr(profile.vaccinazioni).forEach(function(v){var r=row(v.fatta?'green':'amber','**'+v.nome+'**',v.nota&&v.nota!==v.quando?v.nota:'');
+      var t=r.querySelector('.row-text');t.appendChild(document.createTextNode(' '));t.appendChild(tag(v.quando||(v.fatta?'fatta':'da valutare'),v.fatta?'green':'amber'));b.appendChild(r);});
+    c.appendChild(b);var sc=obj(profile.screening);if(Object.keys(sc).length){var s=block('Screening');Object.keys(sc).forEach(function(k){s.appendChild(row('blue','**'+k.replace(/_/g,' ')+'**: '+sc[k]));});c.appendChild(s);}}};
+
+PANELS.macula={title:'👁️ Occhi',quick:['Cosa aspettarsi dai prossimi controlli?','Ci sono novità terapeutiche per il mio caso?','Gli integratori che prendo sono adeguati?'],
+  render:function(c){var m=obj(profile.maculopatia),od=obj(m.od),os=obj(m.os);
+    if(m.diagnosi)c.appendChild(textBlock('Diagnosi',m.diagnosi));
+    var b1=block('Stato attuale dei due occhi'),g=mk('div','eyes');
+    [['Occhio destro (OD)',od,'green'],['Occhio sinistro (OS)',os,'amber']].forEach(function(x){var e=mk('div','eye');var col=x[2]==='green'?['--green','--grnbg','--grnt']:['--amber','--ambrbg','--ambrt'];
+      e.style.cssText='border-color:var('+col[0]+');background:var('+col[1]+')';var l=mk('div','eye-label',x[0]);l.style.color='var('+col[2]+')';e.appendChild(l);e.appendChild(mk('div','eye-status',x[1].stato||'—'));g.appendChild(e);});
+    b1.appendChild(g);c.appendChild(b1);
+    if(od.storia)c.appendChild(textBlock('Storia occhio destro (OD)',od.storia));
+    if(os.storia)c.appendChild(textBlock('Storia occhio sinistro (OS)',os.storia+(os.prossimo?' — Prossimo: '+os.prossimo:'')));
+    if(m.laser_2rt)c.appendChild(textBlock('Laser 2RT',m.laser_2rt));
+    if(arr(m.esami).length){var be=block('Esami strumentali');m.esami.forEach(function(e){be.appendChild(row('blue',e));});c.appendChild(be);}
+    if(m.terapia)c.appendChild(textBlock('Terapia in corso',m.terapia));}};
+
+PANELS.schiena={title:'🦴 Schiena',quick:['Cosa comporta il mio quadro nel tempo?','Quali attività evitare?','Novità sul recupero?'],
+  render:function(c){var r=obj(profile.rachide);
+    if(r.stato)c.appendChild(textBlock('Quadro attuale',r.stato));
+    if(r.storia)c.appendChild(textBlock('Storia clinica',r.storia));
+    if(arr(r.reperti).length){var bi=block('Reperti associati');r.reperti.forEach(function(x){bi.appendChild(row('blue',x));});c.appendChild(bi);}
+    if(profile.attivita_fisica)c.appendChild(textBlock('Attività fisica',profile.attivita_fisica));
+    if(arr(r.da_programmare).length){var bf=block('Da programmare');r.da_programmare.forEach(function(x){bf.appendChild(row('amber',x));});c.appendChild(bf);}}};
+
+PANELS.patologie={title:'🩺 Patologie attive',quick:['Quali patologie interagiscono tra loro?','Qual è la più rischiosa per me?'],
+  render:function(c){
+    var ex=arr(profile.patologie_escluse);if(ex.length){var e=block('Escluse / risolte');ex.forEach(function(x){e.appendChild(row('green',x));});c.appendChild(e);}
+    var g=obj(profile.patologie_attive);
+    Object.keys(g).forEach(function(cat){var b=block(cat);
+      arr(g[cat]).forEach(function(item){var r=row('blue',item);r.style.alignItems='center';
+        var ab=mk('button','btn-soft','Approfondisci');ab.addEventListener('click',function(){openDetail(item);});r.appendChild(ab);b.appendChild(r);});
+      c.appendChild(b);});}};
+
+PANELS.storia={title:'📖 Archivio referti',quick:['Riassumi la mia storia clinica','Quali sono le tappe principali?'],
+  render:function(c){var arch=obj(profile.referti_archivio);
+    var intro=block();intro.appendChild(para('Tocca una specialità per aprire i referti (dal più recente).','text-small'));c.appendChild(intro);
+    Object.keys(arch).forEach(function(spec){var refs=arr(arch[spec]).slice().reverse();
+      var b=block();b.style.padding='0';
+      var head=mk('button','acc-head');head.setAttribute('aria-expanded','false');
+      var lbl=mk('span','',spec),right=mk('span','');right.style.cssText='display:flex;align-items:center;gap:.5rem';
+      right.appendChild(tag(String(refs.length),'blue'));right.appendChild(mk('span','acc-chev','▾'));
+      head.appendChild(lbl);head.appendChild(right);b.appendChild(head);
+      var body=mk('div','acc-body');
+      refs.forEach(function(r){var card=mk('div','ref'),top=mk('div','ref-top');
+        top.appendChild(mk('span','ref-date',r.data));top.appendChild(mk('span','ref-where',r.struttura||''));card.appendChild(top);
+        card.appendChild(mk('div','text',r.testo||''));
+        var ab=mk('button','btn-soft','💬 Approfondisci con l\'AI');ab.style.marginTop='.45rem';ab.addEventListener('click',function(){openRefertoDetail(r,spec);});card.appendChild(ab);
+        body.appendChild(card);});
+      b.appendChild(body);
+      head.addEventListener('click',function(){var open=b.classList.toggle('acc-open');head.setAttribute('aria-expanded',open?'true':'false');});
+      c.appendChild(b);});}};
+
+PANELS.palestra={title:'🏋️ Palestra',quick:['Come sta andando la mia progressione?','Ci sono esercizi da evitare?','Consigli per il prossimo mese?'],
+  render:function(c){var p=obj(profile.palestra),i=obj(p.indicatori_mese_corrente);
+    var b1=block('Indicatori'+(p.ultimo_aggiornamento?' — aggiornato al '+p.ultimo_aggiornamento:''));
+    b1.appendChild(cardGrid([
+      {label:'Sessioni (mese)',value:i.sessioni,ref:i.frequenza,stato:'ok'},
+      {label:'Durata media',value:i.durata_media_min!=null?i.durata_media_min+' min':null,ref:'per sessione',stato:'ok'},
+      {label:'Calorie medie',value:i.calorie_medie,ref:'kcal/sessione',stato:'ok'},
+      {label:'Volume sollevato',value:i.volume_kg!=null?Math.round(i.volume_kg/1000)+' t':null,ref:'tonnellate, mese',stato:'ok'}]));
+    c.appendChild(b1);
+    var tm=arr(p.trend_mensile);if(tm.length){var b2=block('Andamento mensile — durata e calorie');
+      lineChart(b2,tm.map(function(m){return m.mese;}),[
+        {label:'Durata media (min)',data:tm.map(function(m){return m.durata_media;}),borderColor:cssVar('--bluet'),yAxisID:'y'},
+        {label:'Calorie medie',data:tm.map(function(m){return m.calorie_medie;}),borderColor:cssVar('--grnt'),yAxisID:'y1'}],
+        {y:{position:'left'},y1:{position:'right',grid:{display:false}}});
+      c.appendChild(b2);}
+    var pg=arr(p.progressione_gambe);if(pg.length){var b3=block('Progressione carico — Leg Extension/Curl (ginocchio)');
+      b3.appendChild(cardGrid(pg.map(function(x,idx){return {label:x.periodo,value:x.peso_kg+' kg',stato:idx===pg.length-1?'ok':''};})));
+      b3.appendChild(para('Nessun dolore riportato su questi esercizi durante tutto il periodo.','text-small'));c.appendChild(b3);}
+    if(arr(p.note).length){var b4=block('Osservazioni cliniche dall\'allenamento');p.note.forEach(function(n){b4.appendChild(row('blue',n));});c.appendChild(b4);}
+    var vm=obj(p.valutazione_mensile);if(arr(vm.mesi).length){var b5=block('Valutazione mensile per l\'età');
+      if(vm.criteri){var cr=para(vm.criteri,'text-small');cr.style.marginBottom='.5rem';b5.appendChild(cr);}
+      vm.mesi.forEach(function(m){var r=mk('div','row');r.style.display='block';var top=mk('div','');top.style.cssText='display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:.15rem';
+        var mn=mk('span','',m.mese);mn.style.fontWeight='650';top.appendChild(mn);top.appendChild(tag(m.giudizio,m.colore));r.appendChild(top);r.appendChild(mk('div','text',m.motivo||''));b5.appendChild(r);});
+      c.appendChild(b5);}
+    if(arr(p.suggerimenti).length){var b6=block('💡 Suggerimenti per il prossimo mese');p.suggerimenti.forEach(function(s){b6.appendChild(row(s.priorita==='alta'?'green':'amber','**'+s.nome+'**',s.descrizione));});c.appendChild(b6);}
+    var b7=block('Come aggiornare');b7.appendChild(para('Ogni mese carica in chat con Claude il file di backup JSON di GymCoach: si analizzano i nuovi allenamenti e si aggiornano indicatori, grafico e note nel file dei dati.','text-small'));c.appendChild(b7);}};
+
+PANELS.vitali={title:'⌚ Parametri vitali (Apple Watch)',quick:['Cosa significano questi parametri per la mia salute?','Come si collegano alla mia situazione cardiovascolare?','Cosa dovrei monitorare con più attenzione?'],
+  render:function(c){var v=obj(profile.apple_watch),ic=obj(v.indicatori_correnti);
+    var intro=block();intro.appendChild(para('Parametri raccolti dall\'Apple Watch tramite l\'app Salute di iPhone: frequenza cardiaca a riposo, SpO2, VO2max, attività quotidiana ed equilibrio/andatura. Si aggiornano periodicamente, con lo stesso meccanismo della scheda Palestra.','text-small'));c.appendChild(intro);
+    if(!v.ultimo_aggiornamento){var su=block('Da configurare — primo aggiornamento in sospeso','block-warn');su.appendChild(para('Non ci sono ancora dati dall\'Apple Watch. Vedi sotto come procedere per il primo caricamento.'));c.appendChild(su);}
+    else{
+      var hd=block('Indicatori — aggiornato al '+v.ultimo_aggiornamento);
+      hd.appendChild(mk('div','legend-line','✓ verde = nella norma/buono · ! giallo = da monitorare · senza colore = solo informativo, senza un riferimento clinico standard affidabile.'));c.appendChild(hd);
+      arr(v.schede).forEach(function(s){var b=block(s.titolo);b.appendChild(cardGrid(arr(s.voci).map(function(x){return {label:x.nome,value:x.valore!=null?x.valore+(x.unita||''):null,ref:x.giudizio,stato:x.stato};})));c.appendChild(b);});
+      var tm=arr(v.trend_mensile);if(tm.length){var b2=block('Andamento — FC riposo e SpO2 (12 mesi)');
+        lineChart(b2,tm.map(function(m){return m.mese;}),[
+          {label:'FC riposo (bpm)',data:tm.map(function(m){return m.fc_riposo;}),borderColor:cssVar('--redt'),yAxisID:'y'},
+          {label:'SpO2 (%)',data:tm.map(function(m){return m.spo2;}),borderColor:cssVar('--bluet'),yAxisID:'y1'}],
+          {y:{position:'left'},y1:{position:'right',min:90,max:100,grid:{display:false}}});
+        c.appendChild(b2);
+        var b3=block('Andamento — stabilità del cammino (%)');
+        lineChart(b3,tm.map(function(m){return m.mese;}),[{label:'Stabilità cammino (%)',data:tm.map(function(m){return m.stabilita_cammino;}),borderColor:cssVar('--ambrt')}],{y:{suggestedMin:70,suggestedMax:95}});
+        c.appendChild(b3);}
+      if(ic.stabilita_cammino!=null){var eq=block('📉 Andamento equilibrio — da seguire','block-warn');eq.appendChild(para('**Stabilità del cammino: '+ic.stabilita_cammino+'%** — '+(ic.stabilita_cammino_trend||'')));c.appendChild(eq);}
+      if(arr(v.note).length){var b4=block('Osservazioni');v.note.forEach(function(n){b4.appendChild(row('blue',n));});c.appendChild(b4);}
+    }
+    if(v.come_aggiornare)c.appendChild(textBlock('Come aggiornare',v.come_aggiornare));}};
+
+// ===================== Navigazione (con tasto Indietro del telefono) =====================
+var navOk=false;
+function pushNav(){try{history.pushState({dm:Date.now()},'');navOk=true;}catch(e){navOk=false;}}
+window.addEventListener('popstate',function(){closeEdit();if(panelStack.length)doClose();});
+function goBack(){if(navOk)history.back();else doClose();}
+
+function showPanel(title){
+  document.getElementById('home').style.display='none';document.getElementById('panel').classList.add('open');
+  document.getElementById('panel-title').textContent=title;
+  destroyCharts();var c=document.getElementById('panel-content');c.innerHTML='';window.scrollTo(0,0);return c;
+}
+function showHome(){destroyCharts();document.getElementById('panel').classList.remove('open');document.getElementById('home').style.display='';renderHome();}
+
+function openPanel(id,noPush){var p=PANELS[id];if(!p||!profile)return;
+  if(!noPush){panelStack=[id];pushNav();}
+  var o=obj(obj(profile.schede_home)[id]),t=o.titolo?p.title.split(' ')[0]+' '+o.titolo:p.title;
+  var c=showPanel(t);
+  try{p.render(c);}catch(e){console.error(e);var b=block('Dati non leggibili','block-warn');b.appendChild(para('Questa sezione non si può mostrare: nel profilo i dati sono mancanti o in un formato diverso da quello previsto. ('+e.message+')'));c.appendChild(b);}
+  buildChat(id,arr(o.domande).length?o.domande:p.quick,c);
+}
+function openDetail(voce){var id='detail';panelStack.push({type:'detail',voce:voce});pushNav();renderDetail(voce,true);}
+function renderDetail(voce,ask){var id='detail',c=showPanel('🩺 '+voce);
+  if(ask)chatHistories[id]=[];
+  buildChat(id,['Cos\'è e come mi riguarda?','Sintomi da monitorare?','Interazioni con le altre patologie?','La terapia è adeguata?'],c);
+  if(ask){var inp=document.getElementById('input-'+id);inp.value='Approfondisci: '+voce+'. Panoramica completa nel contesto del mio profilo: cos\'è, come mi riguarda, terapia, cosa monitorare, interazioni con le altre patologie.';sendMsg(id);}}
+function openRefertoDetail(ref,spec){panelStack.push({type:'ref',ref:ref,spec:spec});pushNav();renderReferto(ref,spec,true);}
+function renderReferto(ref,spec,fresh){var id='refdetail',c=showPanel('💬 Referto del '+ref.data);
+  c.appendChild(textBlock('Referto — '+(ref.struttura||spec),ref.testo));
+  var intro='Ho letto il referto del '+ref.data+'. Chiedimi pure cosa vuoi sapere.';
+  if(fresh)chatHistories[id]=[{role:'user',hidden:true,content:'CONTESTO REFERTO ('+spec+', '+ref.data+', '+(ref.struttura||'')+'): '+ref.testo+'\n\nAttendi le mie domande.'},{role:'assistant',content:intro}];
+  buildChat(id,['Spiegami in parole semplici','Cosa significano i termini tecnici?','È coerente con la mia storia?','Domande da porre al medico'],c);}
+function openRiepilogo(){if(!profile)return;panelStack=[{type:'riepilogo'}];pushNav();renderRiepilogo(true);}
+function renderRiepilogo(fresh){var id='riepilogo',c=showPanel('📋 Riepilogo per il medico');
+  var info=block();info.appendChild(para('Relazione di sintesi da portare al medico curante. Quando è pronta puoi **copiarla**, **scaricarla** o **stamparla / salvarla in PDF** con i pulsanti sotto il testo.','text-small'));c.appendChild(info);
+  if(fresh)chatHistories[id]=[];
+  buildChat(id,['Rendilo più sintetico','Solo le criticità aperte','Aggiungi domande per gli specialisti'],c,{title:'Sintesi clinica',tall:true});
+  if(fresh){var inp=document.getElementById('input-'+id);inp.value='Redigi una relazione clinica di sintesi da medico consulente al medico curante, su '+(profile.nome||'il paziente')+'. Registro professionale medico-medico, prosa asciutta e argomentata, terminologia clinica appropriata, niente elenchi scolastici. Struttura: riga anagrafica con comorbidità; problemi attivi in ordine di rilevanza, ciascuno col dato di laboratorio/strumentale e razionale; terapia in corso e sospensioni; criticità aperte e accertamenti da programmare come raccomandazioni tra pari. Completo, senza emoji.';sendMsg(id);}}
+
+function doClose(){panelStack.pop();
+  if(!panelStack.length){showHome();return;}
+  var top=panelStack[panelStack.length-1];
+  if(typeof top==='string')openPanel(top,true);
+  else if(top.type==='detail')renderDetail(top.voce,false);
+  else if(top.type==='ref')renderReferto(top.ref,top.spec,false);
+  else if(top.type==='riepilogo')renderRiepilogo(false);
+  else showHome();
+}
+function rerenderCurrent(){if(!panelStack.length){renderHome();return;}panelStack.push(null);doClose();}
+
+// ===================== Aspetto: testo e tema =====================
+function changeScale(dir){
+  var cur=rootPx(),i=0;for(var k=0;k<SCALE_STEPS.length;k++){if(Math.abs(SCALE_STEPS[k]-cur)<.3)i=k;else if(SCALE_STEPS[k]<cur)i=k;}
+  var n=SCALE_STEPS[Math.max(0,Math.min(SCALE_STEPS.length-1,i+dir))];
+  document.documentElement.style.fontSize=n+'px';storeSet('dm_scala',String(n));rerenderCurrent();
+}
+function toggleTheme(){
+  var d=document.documentElement,light=d.getAttribute('data-theme')!=='light';
+  if(light)d.setAttribute('data-theme','light');else d.removeAttribute('data-theme');
+  storeSet('dm_tema',light?'light':'dark');updateThemeUI();rerenderCurrent();
+}
+function updateThemeUI(){var light=document.documentElement.getAttribute('data-theme')==='light';
+  document.getElementById('btn-tema').textContent=light?'🌙':'☀️';
+  var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',light?'#ffffff':'#15191f');}
+
+// ===================== Stampa / download =====================
+function downloadFile(fn,txt,type){var blob=new Blob([txt],{type:type||'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=fn;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},1000);}
+function downloadText(fn,txt){downloadFile(fn,txt);}
+function printReport(md,title){
+  var w=window.open('','_blank');if(!w){alert('Il browser ha bloccato la finestra di stampa: consenti le finestre popup per questa pagina.');return;}
+  var p=profile||{};
+  w.document.write('<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"><title>'+esc((title||'Documento')+' — '+(p.nome||''))+'</title>'+
+    '<style>body{font-family:Georgia,"Times New Roman",serif;font-size:12pt;line-height:1.5;color:#000;max-width:17cm;margin:1.2cm auto;padding:0 .5cm}'+
+    'h1{font-size:15pt;margin:0 0 4pt}h3{font-size:12.5pt;margin:12pt 0 4pt}.meta{color:#333;font-size:10pt;margin-bottom:14pt;border-bottom:1px solid #888;padding-bottom:6pt}'+
+    'ul,ol{margin:4pt 0 6pt 18pt}p{margin:0 0 6pt}hr{border:none;border-top:1px solid #aaa}@page{margin:1.5cm}</style></head><body>'+
+    '<h1>'+esc(String(title||'Documento').replace(/^[^\wÀ-ÿ]+/,''))+'</h1><div class="meta">'+esc(p.nome||'')+(p.nato?' · nato il '+esc(p.nato):'')+' · '+new Date().toLocaleDateString('it-IT')+'</div>'+
+    parseMarkdown(md)+'</body></html>');
+  w.document.close();w.focus();setTimeout(function(){w.print();},400);
+}
+
+// ===================== Profilo: modifica, import/export =====================
+function profileStatusText(){
+  if(!profile)return 'Nessun dato caricato su questo dispositivo.';
+  return (profileSavedAt?'Versione modificata, salvata in questo browser il '+new Date(profileSavedAt).toLocaleString('it-IT')+'.':(FILE_PROFILE?'Stai usando i dati del file dati_profilo.js.':'Dati importati.'))+(storeGet(TOKEN_KEY)?' · Chiave AI impostata.':' · Chiave AI non impostata.');
+}
+function openEdit(){
+  document.getElementById('profileEditor').value=profile?JSON.stringify(profile,null,2):'';
+  document.getElementById('profileStatus').textContent=profileStatusText();
+  document.getElementById('btn-reset').disabled=!FILE_PROFILE;
+  document.getElementById('editModal').classList.add('open');
+}
+function closeEdit(){document.getElementById('editModal').classList.remove('open');}
+function applyProfile(p,persist){
+  profile=p;chatHistories={};
+  var msg='Profilo aggiornato.';
+  if(persist){profileSavedAt=new Date().toISOString();
+    msg=storeSet(PROFILE_KEY,JSON.stringify({savedAt:profileSavedAt,base:FILE_PROFILE&&FILE_PROFILE._versione||null,profile:p}))?'Profilo aggiornato e salvato in questo browser.':'Profilo aggiornato, ma il browser non permette di salvarlo: esporta il file per non perderlo.';}
+  renderHeader();panelStack=[];showHome();return msg;
+}
+function parseProfileText(t){
+  t=String(t||'').replace(/^﻿/,'').trim();
+  var i=t.indexOf('{'),j=t.lastIndexOf('}');
+  if(!/^\{/.test(t)){if(i<0||j<i)throw new Error('nessun dato trovato');t=t.slice(i,j+1);}
+  var p=JSON.parse(t);
+  if(!p||typeof p!=='object'||Array.isArray(p))throw new Error('il profilo deve essere un oggetto { ... }');
+  return p;
+}
+function saveEdit(){
+  var p;try{p=parseProfileText(document.getElementById('profileEditor').value);}catch(e){alert('Dati non validi: '+e.message);return;}
+  var msg=applyProfile(p,true);closeEdit();alert(msg);
+}
+function exportProfile(kind){
+  var p;try{p=parseProfileText(document.getElementById('profileEditor').value);}catch(e){p=profile;}
+  if(!p){alert('Nessun dato da esportare.');return;}
+  var d=new Date().toISOString().slice(0,10);
+  if(kind==='js'){p=clone(p);p._versione=d+'-'+Date.now().toString(36);
+    downloadFile('dati_profilo.js','// DATI PERSONALI DELLA DASHBOARD MEDICO — NON pubblicare questo file.\nwindow.PROFILO_INIZIALE = '+JSON.stringify(p,null,2)+';\n','text/javascript;charset=utf-8');}
+  else downloadFile('profilo_clinico_'+d+'.json',JSON.stringify(p,null,2),'application/json');
+}
+function importProfile(input){
+  var f=input.files&&input.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(){input.value='';
+    var p;try{p=parseProfileText(r.result);}catch(e){alert('File non valido: '+e.message);return;}
+    if(document.getElementById('editModal').classList.contains('open')){document.getElementById('profileEditor').value=JSON.stringify(p,null,2);alert('File caricato nell\'editor. Controlla e premi Salva.');}
+    else{alert(applyProfile(p,true));}
+  };
+  r.readAsText(f);
+}
+function resetProfile(){
+  if(!FILE_PROFILE)return;
+  if(!confirm('Tornare ai dati del file dati_profilo.js? Le modifiche salvate in questo browser verranno eliminate (esportale prima se ti servono).'))return;
+  storeDel(PROFILE_KEY);profileSavedAt=null;applyProfile(clone(FILE_PROFILE),false);closeEdit();alert('Ripristinati i dati del file.');
+}
+function setAppToken(){
+  var cur=storeGet(TOKEN_KEY)||'';
+  var t=prompt('Chiave di accesso al server AI (la stessa impostata come APP_TOKEN nel Worker). Lascia vuoto per rimuoverla.',cur);
+  if(t===null)return;t=t.trim();
+  if(t){if(!storeSet(TOKEN_KEY,t)){alert('Il browser non permette di salvare la chiave.');return;}}else storeDel(TOKEN_KEY);
+  document.getElementById('profileStatus').textContent=profileStatusText();
+}
+function copiaProfilo(){
+  if(!profile){alert('Nessun dato da copiare.');return;}
+  copyText('PROFILO CLINICO COMPLETO — '+(profile.nome||'')+'\n(Incolla in una nuova conversazione con Claude per dargli il quadro clinico aggiornato.)\n\n'+JSON.stringify(profile,null,2));
+  alert('Profilo copiato negli appunti. Incollalo in una nuova conversazione con Claude.');
+}
+function renderHeader(){
+  var p=profile||{},n=p.nome||'';
+  document.getElementById('hdr-nome').textContent=n||'Dashboard Medico';
+  document.getElementById('hdr-avatar').textContent=n?n.split(/\s+/).map(function(w){return w.charAt(0);}).join('').slice(0,2).toUpperCase():'?';
+  var bits=[];if(p.nato)bits.push(p.nato);if(p.eta)bits.push(p.eta+' anni');if(p.bmi)bits.push('BMI '+p.bmi);
+  if(p.gruppo_sanguigno)bits.push('Gruppo '+p.gruppo_sanguigno);
+  if(arr(p.allergie).length)bits.push('Allergie: '+p.allergie.join(', ').toLowerCase());
+  document.getElementById('hdr-info').textContent=profile?bits.join(' · '):'Nessun dato caricato';
+  document.getElementById('btn-riepilogo').disabled=!profile;
+  document.title=n?'Salute — '+n:'Dashboard Medico';
+}
+
+// ===================== Avvio =====================
+loadProfile();
+updateThemeUI();
+renderHeader();
+renderHome();
+</script>
+</body>
+</html>

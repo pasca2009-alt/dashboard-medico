@@ -1,0 +1,5 @@
+# Dati sanitari personali: non devono MAI finire su GitHub
+dati_profilo.js
+profilo_clinico_*.json
+*.backup.html
+dashboard_medico.html
