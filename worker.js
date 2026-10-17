@@ -12,11 +12,14 @@ const MODEL = 'claude-opus-5-5';
 const MAX_TOKENS = 16000;
 const MAX_BODY_BYTES = 400_000;
 const EFFORTS = ['low', 'medium', 'high'];
+// Siti da cui il Worker accetta richieste ("null" = file index.html aperto dal computer).
+// La variabile ALLOWED_ORIGINS, se impostata, sostituisce questo elenco.
+const DEFAULT_ORIGINS = 'null,https://pasca2009-alt.github.io';
 
 export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';
-    const allowed = (env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
+    const allowed = (env.ALLOWED_ORIGINS || DEFAULT_ORIGINS).split(',').map(s => s.trim()).filter(Boolean);
     const originOk = allowed.length === 0 || allowed.includes(origin);
     const cors = {
       'Access-Control-Allow-Origin': originOk && origin ? origin : (allowed[0] || '*'),
