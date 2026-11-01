@@ -28,6 +28,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;background:var(--bg);color:
 .header-right{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 #home{flex:1;padding:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 @media(max-width:600px){#home{grid-template-columns:repeat(2,1fr);padding:12px;gap:10px}.header p{display:none}}
+.updates{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:4px 20px;font-size:11px;color:var(--text2);line-height:1.5}.updates strong{font-weight:500;color:var(--text)}
 .tile{background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:14px;cursor:pointer;display:flex;flex-direction:column;gap:6px;transition:border-color .15s;position:relative;overflow:hidden;min-height:110px}
 .tile:active,.tile:hover{border-color:rgba(255,255,255,.22);background:var(--bg3)}
 .tile-icon{font-size:20px}
@@ -142,6 +143,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;background:var(--bg);color:
 </div>
 
 <div id="home">
+  <div class="updates" id="updates"></div>
   <div class="tile" onclick="openPanel('cruscotto')">
     <div class="tile-icon">📊</div>
     <div class="tile-title">Cruscotto salute</div>
@@ -254,7 +256,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;background:var(--bg);color:
 var WORKER_URL = 'https://holy-band-5ed2.pasca2009.workers.dev/';
 
 var profile = {
-  nome:"Cataldo Pasquale", nato:"10/08/1955", eta:71, sesso:"M", peso_kg:66.5, altezza_cm:166, bmi:24.1,
+  nome:"Cataldo Pasquale", nato:"10/08/1955", eta:71, aggiornamento_app:"01/11/2026", sesso:"M", peso_kg:66.5, altezza_cm:166, bmi:24.1,
   gruppo_sanguigno:"0 Rh+", allergie:["Acari","polvere"], ex_fumatore:"~15 anni, ~30 sigarette/die, smesso",
   medico_curante:"Dr. Emanuele Carnevale, Modena",
   parametri:{
@@ -984,7 +986,11 @@ function copiaProfilo(){var testo='PROFILO CLINICO COMPLETO — '+profile.nome+'
 
 function openEdit(){document.getElementById('profileEditor').value=JSON.stringify(profile,null,2);document.getElementById('editModal').classList.add('open');}
 function closeEdit(){document.getElementById('editModal').classList.remove('open');}
-function saveEdit(){try{profile=JSON.parse(document.getElementById('profileEditor').value);chatHistories={};closeEdit();alert('Profilo aggiornato.');}catch(e){alert('JSON non valido: '+e.message);}}
+function saveEdit(){try{profile=JSON.parse(document.getElementById('profileEditor').value);chatHistories={};closeEdit();fillUpdates();alert('Profilo aggiornato.');}catch(e){alert('JSON non valido: '+e.message);}}
+function fillUpdates(){var u=document.getElementById('updates');if(!u)return;u.innerHTML='';
+  [['App aggiornata il',profile.aggiornamento_app],['Dati iPhone/Watch',profile.apple_watch&&profile.apple_watch.ultimo_aggiornamento],['Dati Palestra',profile.palestra&&profile.palestra.ultimo_aggiornamento]].forEach(function(x){
+    var d=document.createElement('span');var b=document.createElement('strong');b.textContent=x[0]+': ';d.appendChild(b);d.appendChild(document.createTextNode(x[1]||'non disponibile'));u.appendChild(d);});}
+fillUpdates();
 </script>
 </body>
 </html>
