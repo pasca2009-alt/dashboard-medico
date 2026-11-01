@@ -131,7 +131,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;background:var(--bg);color:
     <div class="avatar">CP</div>
     <div>
       <h1>Cataldo Pasquale</h1>
-      <p>10/08/1955 · 70 anni · BMI 24.7 · Gruppo 0 Rh+ · Allergie: acari, polvere</p>
+      <p>10/08/1955 · 71 anni · BMI 24.1 · Gruppo 0 Rh+ · Allergie: acari, polvere</p>
     </div>
   </div>
   <div class="header-right">
@@ -223,7 +223,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;background:var(--bg);color:
     <div class="tile-icon">⌚</div>
     <div class="tile-title">Parametri vitali</div>
     <div class="tile-sub">Apple Watch: FC, SpO2, equilibrio</div>
-    <div class="tile-badges"><span class="tag-green">FC 56.6</span><span class="tag-amber">equilibrio ↓</span></div>
+    <div class="tile-badges"><span class="tag-green">FC 58.6</span><span class="tag-amber">cadute da chiarire</span></div>
     <span class="tile-arrow">›</span>
   </div>
 </div>
@@ -254,7 +254,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;background:var(--bg);color:
 var WORKER_URL = 'https://holy-band-5ed2.pasca2009.workers.dev/';
 
 var profile = {
-  nome:"Cataldo Pasquale", nato:"10/08/1955", eta:70, sesso:"M", peso_kg:66.5, altezza_cm:164, bmi:24.7,
+  nome:"Cataldo Pasquale", nato:"10/08/1955", eta:71, sesso:"M", peso_kg:66.5, altezza_cm:166, bmi:24.1,
   gruppo_sanguigno:"0 Rh+", allergie:["Acari","polvere"], ex_fumatore:"~15 anni, ~30 sigarette/die, smesso",
   medico_curante:"Dr. Emanuele Carnevale, Modena",
   parametri:{
@@ -266,34 +266,40 @@ var profile = {
   },
   familiarita:"Solo maculopatia. Nessuna familiarità per infarto, ictus, diabete, tumori.",
   allergie_dettaglio:"Allergia agli acari della polvere (Dermatophagoides farinae e pteronyssinus), documentata con test ALK-Abelló ~1995 (Dr. Donini). Fu prescritta immunoterapia specifica sottocutanea (vaccino desensibilizzante), ma NON è mai stata effettuata.",
-  attivita_fisica:"Palestra ~3x/sett: pesi su macchine e manubri, carico controllato. Leg Extension/Curl: 23kg (apr 2026) → 27kg (giu) → 29kg (lug-set, stabile 2+ mesi), nessun dolore al ginocchio. Leg Press (80kg) sospesa da metà luglio 2026 per lieve fastidio alla schiena — da riprovare più avanti. Squat (front/dumbbell, 12kg) provati fine luglio, non entrati in routine regolare — scelta prudente vista la fusione L4-L5. A casa: core (dead bug, bird dog, bridge) dall'11/09/2026.",
+  attivita_fisica:"Palestra ~3x/sett: pesi su macchine e manubri, carico controllato. Leg Extension 23kg (apr 2026) → 29kg (da luglio, fermo a 29 per 4 mesi); Leg Curl 23kg → 29kg → 32kg (da fine set 2026). Nessun dolore al ginocchio su questi esercizi. Leg Press (80kg) sospesa da metà luglio 2026 per lieve fastidio alla schiena — da riprovare più avanti. Squat (front/dumbbell, 12kg) provati fine luglio, non entrati in routine regolare — scelta prudente vista la fusione L4-L5. A casa: core (dead bug, bird dog, bridge) dall'11/09/2026.",
   rachide_stato:"Post-fusione L4-L5 (mar 2025): claudicatio risolta, cammina bene, NO sintomi neurologici arti. Dolore solo posturale nei cambi di posizione, stabile, migliora col bridge. Assestamento post-fusione normale. Leg Press causa fastidio alla schiena — sospesa, da valutare col neurochirurgo prima di reintrodurla.",
   palestra:{
     fonte:"GymCoach (app personale) - aggiornamento mensile su richiesta",
-    ultimo_aggiornamento:"20/09/2026 (dati fino al 19/09/2026)",
-    indicatori_mese_corrente:{sessioni:8,durata_media_min:106,calorie_medie:560,volume_kg:86821,frequenza:"~3x/settimana"},
+    ultimo_aggiornamento:"01/11/2026 (dati fino al 30/10/2026)",
+    indicatori_mese_corrente:{sessioni:11,durata_media_min:129,calorie_medie:692,volume_kg:162638,frequenza:"~3x/settimana (ottobre 2026)"},
     trend_mensile:[
       {mese:"Luglio 2026",durata_media:82,calorie_medie:466,sessioni:7},
       {mese:"Agosto 2026",durata_media:99,calorie_medie:568,sessioni:13},
-      {mese:"Settembre 2026*",durata_media:106,calorie_medie:560,sessioni:8}
+      {mese:"Settembre 2026",durata_media:112,calorie_medie:597,sessioni:13},
+      {mese:"Ottobre 2026",durata_media:129,calorie_medie:692,sessioni:11}
     ],
     progressione_gambe:[
       {periodo:"Apr 2026",peso_kg:23},
       {periodo:"Giu 2026",peso_kg:27},
-      {periodo:"Lug-Set 2026",peso_kg:29}
+      {periodo:"Lug-Ott 2026 · Leg Extension",peso_kg:29},
+      {periodo:"Ott 2026 · Leg Curl",peso_kg:32}
     ],
     note:[
       "Leg Press (80kg): lieve fastidio alla schiena, sospesa da metà luglio 2026. Da riprovare più avanti, eventualmente dopo parere neurochirurgo.",
       "Squat (front/dumbbell squat, 12kg): provati fine luglio, non diventati esercizio regolare — scelta prudente per la fusione L4-L5.",
-      "Leg Extension/Curl: nessun dolore al ginocchio, carico stabile a 29kg da oltre 2 mesi.",
-      "Esercizi di core (Bird Dog, Cat-Cow, Glute Bridge) presenti nel log dall'11/09/2026, coerenti con il lavoro di stabilizzazione lombare."
+      "Leg Extension: carico fermo a 29kg da luglio (4 mesi). Leg Curl salito a 32kg da fine settembre 2026. Nessun dolore riferito da Cataldo su questi esercizi (il dolore al ginocchio compare nella vita quotidiana: scale, flessione profonda, appoggio del piede). Dal 25/09/2026 sono comparsi scrosci/schiocchi e cedimento sporadico: prima di aumentare ancora i carichi sulle gambe conviene sentire l'ortopedico.",
+      "Esercizi di core e mobilità (Bird Dog, Cat-Cow, Glute Bridge, Hamstring Stretch, Ankle Mobility) presenti nel log da settembre 2026, coerenti con il lavoro di stabilizzazione lombare. Dal 20/09 sono comparsi anche Hamstring Stretch e Ankle Mobility.",
+      "Durata delle sedute in forte aumento: media 82 min (luglio) → 99 (agosto) → 112 (settembre) → 129 (ottobre), con le ultime sedute di 145-155 minuti (calorie 760-830 per seduta). Sedute così lunghe aumentano affaticamento e rischio di errori di esecuzione: da riferire a fisioterapista/neurochirurgo, soprattutto con fusione L4-L5 e ginocchio instabile.",
+      "Equilibrio in piedi: nessun esercizio dedicato (monopodalico, tandem) nel log fino al 30/10/2026, e Pallof Press non ripreso dopo il tentativo di luglio. L'Apple Watch segnala stabilità del cammino ancora sotto i livelli 2021-2023: è l'area dove il lavoro manca di più.",
+      "Dato anomalo corretto: nel log del 26/09/2026 l'Incline Press risulta a 4336 kg, quasi certamente un refuso per ~43 kg. Nel cruscotto il volume di settembre è stato ricalcolato con 43 kg (146.379 kg invece di 275.169). Il refuso va corretto nell'app GymCoach, altrimenti ricompare ad ogni esportazione."
     ],
     valutazione_mensile:{
       criteri:"Indicatore orientativo (non sostituisce il parere di un fisioterapista/medico) basato su 4 criteri chiave per l'attività fisica dopo i 65 anni, secondo linee guida OMS/ACSM: (1) Frequenza — 2-3 sessioni/sett raccomandate; (2) Copertura muscolare — allenamento full body; (3) Costanza — regolarità nel tempo; (4) Equilibrio/stabilità — componente esplicitamente raccomandata over 65 per prevenzione cadute, spesso trascurata da chi fa solo pesi.",
       mesi:[
         {mese:"Luglio 2026",giudizio:"Buono",colore:"amber",motivo:"Frequenza e copertura muscolare corrette, ma nessun lavoro di equilibrio/stabilità."},
         {mese:"Agosto 2026",giudizio:"Buono",colore:"amber",motivo:"Ottima costanza (13 sessioni) e copertura completa, ma componente equilibrio ancora assente."},
-        {mese:"Settembre 2026*",giudizio:"Ottimo",colore:"green",motivo:"Stessa costanza e copertura, più l'aggiunta di esercizi di core/equilibrio (Bird Dog, Cat-Cow, Glute Bridge) — completa il quadro raccomandato per l'età."}
+        {mese:"Settembre 2026",giudizio:"Ottimo",colore:"green",motivo:"Stessa costanza e copertura, più l'aggiunta di esercizi di core/equilibrio (Bird Dog, Cat-Cow, Glute Bridge) — completa il quadro raccomandato per l'età."},
+        {mese:"Ottobre 2026",giudizio:"Buono",colore:"amber",motivo:"Frequenza (~3 sedute/sett.), costanza e copertura confermate, core e mobilità presenti. Manca ancora il lavoro di equilibrio in piedi (il core a terra non lo sostituisce, come indicato nei suggerimenti) e le sedute sono salite a 130-155 minuti: da tenere d'occhio per affaticamento. Giudizio più prudente di settembre perché ora il dato dell'Apple Watch sulla stabilità del cammino rende l'equilibrio in piedi più rilevante."}
       ]
     },
     suggerimenti:[
@@ -303,53 +309,62 @@ var profile = {
     ]
   },
   apple_watch:{
-    fonte:"Apple Watch → app Salute (iPhone), dashboard riassuntiva HTML caricata dall'utente — dati storici dal 2017, metriche cliniche continue dal 2019-2021",
-    ultimo_aggiornamento:"24/09/2026",
+    fonte:"Apple Watch + iPhone → app Salute, esportazione completa (archivio zip analizzato direttamente: 7,8 milioni di registrazioni dal 2017, 453 allenamenti, 124 ECG)",
+    ultimo_aggiornamento:"01/11/2026 (dati fino al 31/10/2026)",
     indicatori_correnti:{
-      fc_riposo_media:56.6, fc_riposo_trend:"Stabile, in leggero miglioramento negli ultimi 2 mesi (59-60 bpm lug-ago → 55.8 bpm set)",
-      hrv_media:null,
-      vo2max:33.8, vo2max_nota:"Buono per l'età (71 anni, M) secondo le fasce di riferimento Apple Fitness",
-      spo2_media:94.2, spo2_trend:"Lieve calo da maggio 2026 (95.0-95.3% gen-apr → 93.6-94.3% mag-set)",
-      passi_medi:11114,
-      energia_attiva_media:637,
-      minuti_esercizio_medi:73,
-      velocita_cammino_media:3.9,
-      stabilita_cammino:82.9, stabilita_cammino_trend:"In calo costante da 5 mesi: 88.6% (apr) → 81.8% (set 2026). Ancora in fascia 'OK' Apple (>80%) ma il trend discendente è da seguire",
-      asimmetria_cammino:2.7,
-      sonno_ore_medie:6.68,
-      cuore:{fc_riposo:56.6,fc_media:76.0,fc_camminando:78.1,vo2max:33.8,spo2:94.2,freq_respiratoria:15.6},
-      attivita:{passi:11114,distanza_km:8.0,energia_attiva:637,minuti_esercizio:73,piani_saliti:11.1,tempo_in_piedi:159},
-      cammino:{velocita:3.9,lunghezza_passo:64.0,stabilita:82.9,asimmetria:2.7,doppio_appoggio:29.0,velocita_scale:0.24},
-      sonno:{qualita:79,durata:"6h 41min",durata_ore_dec:6.68,periodo:"media ultimi 7 giorni",fonte:"riportato manualmente da app Salute (non presente nell'export)"},
-      udito:{rumore_ambientale:52.1,volume_cuffie:65.8},
-      altro:{luce_giorno:118,peso_ultimo:67.1,peso_data:"21/02/2026"}
+      fc_riposo_media:58.6, fc_riposo_trend:"Ottobre 58.6 bpm (settembre 56.4, minimo dell'anno 56.1 a marzo): stabile nella fascia 56-61 bpm degli ultimi 12 mesi",
+      hrv_media:43.4, hrv_trend:"Variabilità cardiaca (SDNN) 43.4 ms nei 30 giorni; settembre 49.7 → ottobre 43.5, media 12 mesi 44.6 ms. Non esistono fasce di riferimento affidabili per età/sesso: conta il confronto con se stessi",
+      vo2max:31.5, vo2max_nota:"Ultima stima 22/10/2026 (31.5). Picco 34.4 il 22/09/2026; nel 2026 oscilla tra 31.2 e 34.4 (media 12 mesi 32.3). Buono per l'età (71 anni, M) secondo le fasce Apple Fitness",
+      recupero_fc_1min:20, recupero_fc_data:"22/10/2026",
+      spo2_media:94.9, spo2_trend:"Stabile (media 12 mesi 94.5%; medie annuali 93.7-94.5% dal 2021). Lieve oscillazione stagionale: 95% a inizio 2026, 93.6% in giugno-luglio, 94.9% in ottobre",
+      passi_medi:11266,
+      energia_attiva_media:667,
+      minuti_esercizio_medi:79,
+      velocita_cammino_media:4.0,
+      stabilita_cammino:83, stabilita_cammino_data:"21/10/2026", stabilita_cammino_trend:"Minimo a metà settembre (80-81%), poi risalita a 87-88% a inizio ottobre e 83% il 21/10. Media 12 mesi 84.6%, ancora sotto i livelli 2021-2023 (91-94%). Il dato è settimanale e oscilla di qualche punto",
+      asimmetria_cammino:3.3,
+      sonno_ore_medie:6.43,
+      cuore:{fc_riposo:58.6,fc_media:77.6,fc_camminando:77.9,vo2max:31.5,spo2:94.9,freq_respiratoria:15.6,hrv:43.4,recupero_fc:20},
+      attivita:{passi:11266,distanza_km:8.1,energia_attiva:667,minuti_esercizio:79,piani_saliti:9.9,tempo_in_piedi:171},
+      cammino:{velocita:4.0,lunghezza_passo:66.4,stabilita:83,asimmetria:3.3,doppio_appoggio:29.4,velocita_scale:0.25},
+      sonno:{qualita:79,qualita_nota:"punteggio riportato a mano da Cataldo a fine settembre (non presente nell'export)",durata:"6h 26min",durata_ore_dec:6.43,periodo:"media ultimi 30 giorni (29 notti)",notti_sotto_6h:"12 su 29",profondo_min:18,rem_min:61,core_min:304,sveglio_min:30,fonte:"Apple Watch, esportazione Salute"},
+      udito:{rumore_ambientale:62,volume_cuffie:66},
+      altro:{luce_giorno:104,peso_ultimo:67.1,peso_data:"21/02/2026",peso_trend:"61,0 kg (mag 2017) → 67,1 kg (feb 2026): +6 kg in 9 anni, aumento graduale — da monitorare",massa_grassa:15.8,massa_grassa_data:"11/03/2022"},
+      ecg:{totale:124,sinusale:123,dal:"03/10/2019",al:"20/10/2026",esito:"123 'Ritmo sinusale'; 1 registrazione di qualità insufficiente (non interpretabile, non anomala)"},
+      cadute:{totale:9,dal_2026:5,date_2026:"06/03, 08/03, 31/03, 21/06, 26/06",precedenti:"10/06/2021, 23/06/2022, 12/12/2024, 05/01/2025"}
     },
     trend_mensile:[
-      {mese:"ott 25",fc_riposo:59.3,spo2:95.2,passi:9821,stabilita_cammino:78.6},
-      {mese:"nov 25",fc_riposo:60.9,spo2:94.9,passi:10827,stabilita_cammino:82.2},
-      {mese:"dic 25",fc_riposo:60.5,spo2:94.9,passi:9969,stabilita_cammino:82.8},
-      {mese:"gen 26",fc_riposo:58.4,spo2:94.5,passi:9916,stabilita_cammino:83.5},
-      {mese:"feb 26",fc_riposo:58.9,spo2:94.9,passi:11211,stabilita_cammino:84.0},
-      {mese:"mar 26",fc_riposo:56.1,spo2:95.3,passi:11055,stabilita_cammino:86.3},
-      {mese:"apr 26",fc_riposo:57.7,spo2:95.0,passi:11674,stabilita_cammino:88.6},
-      {mese:"mag 26",fc_riposo:58.1,spo2:94.1,passi:10399,stabilita_cammino:85.6},
-      {mese:"giu 26",fc_riposo:58.4,spo2:93.6,passi:11650,stabilita_cammino:86.0},
-      {mese:"lug 26",fc_riposo:59.2,spo2:93.7,passi:9898,stabilita_cammino:84.1},
-      {mese:"ago 26",fc_riposo:59.7,spo2:93.8,passi:8357,stabilita_cammino:83.4},
-      {mese:"set 26*",fc_riposo:55.8,spo2:94.3,passi:11223,stabilita_cammino:81.8}
+      {mese:"nov 25",fc_riposo:60.9,spo2:94.9,passi:10827,stabilita_cammino:82.1,hrv:42.1,sonno_h:6.77},
+      {mese:"dic 25",fc_riposo:60.5,spo2:94.9,passi:9972,stabilita_cammino:82.8,hrv:42.6,sonno_h:6.84},
+      {mese:"gen 26",fc_riposo:58.4,spo2:94.5,passi:9884,stabilita_cammino:83.4,hrv:42.5,sonno_h:6.79},
+      {mese:"feb 26",fc_riposo:58.9,spo2:94.9,passi:11212,stabilita_cammino:84.0,hrv:40.7,sonno_h:6.6},
+      {mese:"mar 26",fc_riposo:56.1,spo2:95.3,passi:11058,stabilita_cammino:86.3,hrv:44.3,sonno_h:6.61},
+      {mese:"apr 26",fc_riposo:57.6,spo2:95.0,passi:11669,stabilita_cammino:88.6,hrv:45.5,sonno_h:6.66},
+      {mese:"mag 26",fc_riposo:58.3,spo2:94.1,passi:10400,stabilita_cammino:85.6,hrv:45.6,sonno_h:6.53},
+      {mese:"giu 26",fc_riposo:58.4,spo2:93.6,passi:11652,stabilita_cammino:86.0,hrv:42.8,sonno_h:5.68},
+      {mese:"lug 26",fc_riposo:59.1,spo2:93.6,passi:9902,stabilita_cammino:84.1,hrv:47.5,sonno_h:6.45},
+      {mese:"ago 26",fc_riposo:59.8,spo2:93.9,passi:8354,stabilita_cammino:83.4,hrv:47.5,sonno_h:5.89},
+      {mese:"set 26",fc_riposo:56.4,spo2:94.3,passi:11369,stabilita_cammino:82.8,hrv:49.7,sonno_h:6.7},
+      {mese:"ott 26",fc_riposo:58.6,spo2:94.9,passi:11290,stabilita_cammino:85.7,hrv:43.5,sonno_h:6.51}
     ],
     note:[
-      "Stabilità del cammino (Apple Walking Steadiness) in calo costante da aprile a settembre 2026 (88.6% → 81.8%). È l'indicatore di equilibrio/rischio caduta calcolato dal watch dall'andatura quotidiana — si collega direttamente all'esercizio di equilibrio monopodalico già suggerito nella scheda Palestra. Ancora in fascia 'OK' ma da tenere sotto osservazione nei prossimi mesi, anche alla luce di gonartrosi e stabilizzazione L4-L5.",
-      "SpO2 media in lieve calo da maggio 2026 (94-95% → 93.6-94.3%). Valori nella norma bassa per rilevazioni da polso (meno precise di un pulsossimetro clinico), non allarmanti isolatamente, ma utile segnalarlo al medico curante alla luce della storia di sospetta BPCO (esclusa) ed ex-fumo.",
-      "Sonno: 6h 41min medi (ultimi 7 giorni) e punteggio qualità 79/100, riportati a mano da Cataldo dall'app Salute — non presenti nell'export scaricato, quindi al momento è un'istantanea a 7 giorni e non un trend mensile come gli altri indicatori. Durata leggermente sotto le 7-8 ore generalmente consigliate per l'età, ma non è un dato isolato allarmante. Non ho un riferimento affidabile per le fasce del punteggio qualità Apple (0-100), quindi lo riporto senza etichettarlo come buono/scarso.",
-      "Nessun dato di variabilità della frequenza cardiaca (HRV) nell'esportazione.",
-      "Nessun dato di Recupero cardio (Heart Rate Recovery) — verificato da Cataldo direttamente in app Salute, non presente. Il watch lo calcola solo da allenamenti con fine ben definita (es. camminata/corsa registrata con GPS) seguiti da qualche minuto di fermo con watch indosso: probabilmente non si è ancora verificata questa combinazione.",
-      "Velocità di salita scale: 0.24 m/s (media 30gg). Non è uno degli indicatori Apple con fasce di riferimento pubbliche standardizzate come la stabilità del cammino, quindi lo riporto come dato grezzo da confrontare nel tempo più che da interpretare isolatamente — resta comunque coerente con il dolore riferito sulle scale per la gonartrosi DX.",
-      "Peso rilevato dal watch: ultimo valore 67.1 kg (21/02/2026, poi il watch non ne ha più registrati). Leggermente diverso dai 66.5 kg nel profilo principale — probabilmente bilance o momenti di misurazione diversi. Se il peso attuale differisce, aggiornalo.",
-      "Esposizione sonora — rumore ambientale 52 dB e volume cuffie 66 dB (medie 30gg): entrambi ben sotto le soglie di rischio uditivo (>85 dB prolungati). Non risultano un fattore aggravante per l'ipoacusia bilaterale lieve già documentata.",
-      "Tempo alla luce del giorno: ~118 min/giorno in media. Dato utile da menzionare insieme alla vitamina D 25-OH mai dosata, anche se l'esposizione solare registrata dal watch non sostituisce la misurazione ematica."
+      "CADUTE RILEVATE DAL WATCH: l'Apple Watch ha registrato 9 cadute dal 2021, di cui 5 nel 2026 (06/03, 08/03, 31/03, 21/06, 26/06). Sono rilevazioni automatiche e possono includere falsi allarmi (movimenti bruschi, palestra, ecc.): da confermare con Cataldo quali erano cadute vere. Se reali, sono rilevanti per equilibrio, ginocchio instabile e fusione L4-L5, e vanno riferite a ortopedico e neurochirurgo.",
+      "Stabilità del cammino (Apple Walking Steadiness): in calo dal 2021 al 2025 (94% → 80% di media annua), minimo di metà settembre 2026 (80-81%), poi risalita a 87-88% a inizio ottobre e 83% il 21/10. È l'indicatore di equilibrio/rischio caduta calcolato dal watch dall'andatura quotidiana: ancora sotto i livelli 2021-2023, da tenere sotto osservazione. Si collega all'esercizio di equilibrio monopodalico suggerito nella scheda Palestra, finora non entrato nel log.",
+      "Recupero cardio (Heart Rate Recovery): per la prima volta c'è una misura, 20 bpm di calo nel primo minuto dopo l'allenamento del 22/10/2026. Un calo superiore a 12 bpm è la soglia classicamente considerata normale. È un valore singolo: serve ripeterlo nel tempo per dirne di più.",
+      "VO2max: 31.5 (22/10/2026), in calo rispetto al picco di 34.4 del 22/09/2026 ma dentro le oscillazioni del 2026 (31.2-34.4). La stima del watch varia con il tipo di camminata/allenamento registrato, quindi una singola variazione non è significativa.",
+      "Variabilità cardiaca (HRV, SDNN): 43.4 ms in media negli ultimi 30 giorni (settembre 49.7, ottobre 43.5; media 12 mesi 44.6). Non esistono fasce di riferimento affidabili per età e sesso, quindi non la valuto come buona o cattiva. Il calo di ottobre coincide con sedute di palestra più lunghe e sonno corto, ma questo non prova un nesso.",
+      "Sonno (dati del watch, 29 notti): 6h 26min di media negli ultimi 30 giorni e negli ultimi 7, con 12 notti su 29 sotto le 6 ore. Fasi stimate: sonno leggero ~5h 04min, REM ~61 min (16%), profondo ~18 min (5%), risvegli ~30 min. Sotto le 7-8 ore generalmente consigliate per l'età. Le fasi del sonno stimate da un orologio sono approssimative, non equivalgono a una polisonnografia. Il punteggio qualità 79/100 è stato riportato a mano a fine settembre e non è nell'export; non ho un riferimento affidabile per le fasce Apple.",
+      "SpO2: stabile nel tempo (media 12 mesi 94.5%, ottobre 94.9%). Valori da polso, meno precisi di un pulsossimetro clinico; da menzionare al medico curante alla luce della storia di sospetta BPCO (esclusa) ed ex-fumo.",
+      "ECG: 124 registrazioni dal 03/10/2019 al 20/10/2026. 123 con esito 'Ritmo sinusale', 1 con qualità della registrazione insufficiente (non interpretabile, non anomala). Nessuna aritmia rilevata dal watch.",
+      "Allenamenti registrati dal watch: 453 dal 2019. In ottobre 2026: 11 sedute di forza e 1 camminata. Le sedute di forza sono lunghe (fino a 2h 29min il 30/10), in accordo con il dato di GymCoach.",
+      "Peso: dato watch 67.1 kg (21/02/2026, poi nessuna nuova misura), in lento aumento dal 2017 (61.0 kg → 67.1 kg, +6 kg in 9 anni). Leggermente diverso dai 66.5 kg nel profilo principale. Aumento graduale da monitorare, anche per il carico sulle ginocchia. Massa grassa ferma all'ultima misura di mar 2022 (15.8%).",
+      "Piani saliti: 9.9/giorno (ultimi 30gg), inferiori alla media 2019-2022 (~11-13/giorno): coerente con l'evitare le scale per il dolore al ginocchio.",
+      "Velocità di salita scale 0.25 m/s e discesa 0.31 m/s (media 30gg). Non ci sono fasce standard pubbliche per questi indicatori: li riporto come dato da confrontare nel tempo.",
+      "Esposizione sonora: rumore ambientale 62 dB (ottobre, più alto dei 52 dB di settembre) e volume cuffie 66 dB (medie 30gg): ancora sotto le soglie di rischio uditivo (>85 dB prolungati). Non è un fattore aggravante per l'ipoacusia bilaterale lieve già documentata.",
+      "Tempo alla luce del giorno: ~104 min/giorno in media. Da menzionare insieme alla vitamina D 25-OH mai dosata, anche se l'esposizione solare registrata dal watch non sostituisce la misurazione ematica.",
+      "Le medie di velocità e lunghezza del passo (stabili da anni, ~4.0 km/h e ~65 cm) risentono delle passeggiate quotidiane col cane, con soste frequenti: sono misurate passivamente nella vita di tutti i giorni, non in test controllati."
     ],
-    come_aggiornare:"Ogni volta che vuoi aggiornare, esporta di nuovo questa dashboard riassuntiva HTML (o un file simile) e caricala qui in chat: ricalcolo gli indicatori e aggiorno grafico e note. Evita di caricare l'export.zip completo di Apple Salute: con anni di dati supera il limite di caricamento della chat (~135 MB) e viene troncato."
+    come_aggiornare:"Esporta i dati da Salute (iPhone) e carica qui l'archivio zip: questa volta quello completo (155 MB) è arrivato integro e l'ho analizzato direttamente, quindi ho potuto leggere anche sonno, HRV, cadute e recupero cardio. Se un caricamento risulta troncato, basta un riepilogo (PDF o pagina HTML) generato dall'export."
   },
   terapia_cronica:[
     {nome:"Atorvastatina 20 mg", indicazione:"dislipidemia", note:"LDL 98, target ≤70 — da rivalutare"},
@@ -412,12 +427,12 @@ var profile = {
     antiinfluenzale:"nov 2025",antipneumococcica:"dic 2025",
     herpes_zoster:"NON fatta - da valutare (Shingrix, rilevante per situazione oculare)",anti_covid:"da valutare richiamo stagionale per età"
   },
-  screening:{colon_retto:"sangue occulto negativo (lug 2024)"},
+  screening:{colon_retto:"sangue occulto NEGATIVO — esito comunicato da AUSL Modena il 20/10/2026 (precedente: lug 2024). Programma: ripetizione ogni 2 anni fino ai 74 anni, il prossimo invito arriva per posta (indicativamente autunno 2028)."},
   note_per_visite:{
     medico_base:"LDL 98 → target ≤70 (ottimizzare statina). Dosare vitamina D 25-OH e HbA1c al prossimo prelievo. Shingrix: indicato a 70 anni, rilevante per situazione oculare (evitare zoster oftalmico). COVID: valutare richiamo stagionale, eventualmente con antinfluenzale. Rivedere lista integratori.",
     oculista:"Oltre all'AREDS 2 aggiungo Vision Defender MZ (meso-zeaxantina): ha senso o è ridondante? Confermare posologia dei due prodotti.",
-    neurochirurgo:"Follow-up set 2026. Claudicatio risolta, no sintomi neurologici. Dolore solo posturale stabile, migliora col bridge. Palestra macchine+manubri controllato + core a casa. NOTA: Leg Press (80kg) causa lieve fastidio alla schiena, sospesa da metà luglio — chiedere se e quando reintrodurla. Chiedere: tenuta fusione, stato livelli adiacenti L3-L4/L5-S1, sicurezza allenamento, utilità fisioterapia.",
-    ortopedico:"Gonartrosi tricompartimentale DX nota (RX 18/09/2025). Dolore meccanico su: scale, girarsi a letto, appoggio del piede camminando, flessione profonda nella vita quotidiana (chinarsi/inginocchiarsi) — MAI durante leg extension/curl in palestra a carico leggero. Arcoxia (etoricoxib) 10gg efficace solo temporaneamente. In corso UC-II collagene tipo 2. NOVITÀ 25/09/2026: comparsi scrosci/schiocchi articolari e sensazione di cedimento/instabilità (sporadica, non ad ogni passo) — da riferire esplicitamente, non presenti in precedenza. Chiedere: RM ginocchio per escludere componente meniscale/legamentosa, opportunità di infiltrazione, indicazioni su squat/flessione profonda da evitare, fisioterapia. Anche da Apple Watch: stabilità del cammino in calo da 5 mesi (88.6%→81.8%) — utile menzionarlo in ottica di rischio caduta legato all'instabilità del ginocchio."
+    neurochirurgo:"Follow-up set 2026. Claudicatio risolta, no sintomi neurologici. Dolore solo posturale stabile, migliora col bridge. Palestra macchine+manubri controllato + core a casa. NOTA: Leg Press (80kg) causa lieve fastidio alla schiena, sospesa da metà luglio — chiedere se e quando reintrodurla. Sedute di palestra salite a 130-155 min (ottobre 2026): chiedere se è un problema per la fusione. Chiedere: tenuta fusione, stato livelli adiacenti L3-L4/L5-S1, sicurezza allenamento, utilità fisioterapia.",
+    ortopedico:"Gonartrosi tricompartimentale DX nota (RX 18/09/2025). Dolore meccanico su: scale, girarsi a letto, appoggio del piede camminando, flessione profonda nella vita quotidiana (chinarsi/inginocchiarsi) — MAI durante leg extension/curl in palestra a carico leggero. Arcoxia (etoricoxib) 10gg efficace solo temporaneamente. In corso UC-II collagene tipo 2. NOVITÀ 25/09/2026: comparsi scrosci/schiocchi articolari e sensazione di cedimento/instabilità (sporadica, non ad ogni passo) — da riferire esplicitamente, non presenti in precedenza. Chiedere: RM ginocchio per escludere componente meniscale/legamentosa, opportunità di infiltrazione, indicazioni su squat/flessione profonda da evitare, fisioterapia. Anche da Apple Watch: stabilità del cammino in calo 2021-2025 (94%→80%), in ripresa nel 2026 ma ancora sotto i livelli 2021-2023, e 5 cadute rilevate dal watch nel 2026 (06/03, 08/03, 31/03, 21/06, 26/06; da confermare se reali) — utile menzionarlo in ottica di rischio caduta legato all'instabilità del ginocchio."
   },
   referti_archivio:{
     "Oculistica":[
@@ -485,12 +500,13 @@ var profile = {
     ],
     "Vaccinazioni & Screening":[
       {data:"16/07/2024",struttura:"Screening AUSL Modena",testo:"Ricerca sangue occulto feci (screening colon-retto): NEGATIVO."},
+      {data:"20/10/2026",struttura:"Screening AUSL Modena (lettera esito)",testo:"Ricerca del sangue occulto nelle feci (screening colon-retto): esito NEGATIVO. Copia inviata al medico di medicina generale e sul Fascicolo Sanitario Elettronico. Il programma prevede la ripetizione ogni 2 anni fino al 74° anno di età; il prossimo invito sarà inviato per tempo. In caso di disturbi intestinali significativi o perdite di sangue evidenti con le feci: rivolgersi al medico di medicina generale. Numero verde screening 800 300315."},
       {data:"24/12/2025",struttura:"Igiene Pubblica Modena",testo:"Antitetanica 4 dosi. Antidifterica+antipertossica ott 2024. Antiinfluenzale nov 2025. Antipneumococcica dic 2025. NON documentate: Herpes Zoster, anti-COVID."}
     ]
   }
 };
 
-var SYSTEM_PROMPT = "Sei il medico consulente personale di Cataldo Pasquale, 70 anni. Esperto multidisciplinare: medicina generale, cardiologia, oculistica, ORL, ortopedia, dermatologia, endocrinologia, pneumologia.\n\nPROFILO CLINICO COMPLETO:\n{PROFILE}\n\nCOME RISPONDERE:\n1. ESAUSTIVITÀ: una sola risposta completa e autosufficiente. Non frammentare, non rimandare, approfondisci subito.\n2. RAGIONA SUL SUO CASO: collega sempre ai suoi dati reali (valori, referti, patologie, terapia). Se un dato manca, dillo.\n3. COLLEGA GLI APPARATI: se una domanda ha implicazioni su altri organi, evidenzialo.\n4. STRUTTURA: titoli e paragrafi, prosa che spiega il perché, non solo il cosa.\n5. WEB SEARCH: per novità terapeutiche/linee guida usa la ricerca web e cita le fonti con data.\n6. CONCRETEZZA: chiudi indicando cosa monitorare, cosa chiedere allo specialista, cosa manca.\n7. ONESTÀ: segnala incertezze e limiti. Le decisioni terapeutiche spettano ai medici reali.\nRispondi in italiano, chiaro ma clinicamente preciso.";
+var SYSTEM_PROMPT = "Sei il medico consulente personale di Cataldo Pasquale, 71 anni. Esperto multidisciplinare: medicina generale, cardiologia, oculistica, ORL, ortopedia, dermatologia, endocrinologia, pneumologia.\n\nPROFILO CLINICO COMPLETO:\n{PROFILE}\n\nCOME RISPONDERE:\n1. ESAUSTIVITÀ: una sola risposta completa e autosufficiente. Non frammentare, non rimandare, approfondisci subito.\n2. RAGIONA SUL SUO CASO: collega sempre ai suoi dati reali (valori, referti, patologie, terapia). Se un dato manca, dillo.\n3. COLLEGA GLI APPARATI: se una domanda ha implicazioni su altri organi, evidenzialo.\n4. STRUTTURA: titoli e paragrafi, prosa che spiega il perché, non solo il cosa.\n5. WEB SEARCH: per novità terapeutiche/linee guida usa la ricerca web e cita le fonti con data.\n6. CONCRETEZZA: chiudi indicando cosa monitorare, cosa chiedere allo specialista, cosa manca.\n7. ONESTÀ: segnala incertezze e limiti. Le decisioni terapeutiche spettano ai medici reali.\nRispondi in italiano, chiaro ma clinicamente preciso.";
 
 var SECTION_CTX = {
   alerts:"Rispondi su ALERT e situazioni da monitorare.",cal:"Rispondi su CALENDARIO e scadenze.",
@@ -619,7 +635,8 @@ PANELS.alerts={title:'⚠️ Alert & panoramica',quick:['Come ottimizzare LDL a 
     b.appendChild(row('dot-red','<strong>LDL 98 mg/dL</strong> — target &lt;70 con ateromasia carotidea e aortica. <span class="tag-red">Da ottimizzare</span>'));
     b.appendChild(row('dot-amber','<strong>Vitamina D</strong> sospesa e mai dosata + <strong>HbA1c</strong> mai fatta. <span class="tag-amber">Al prelievo</span>'));
     b.appendChild(row('dot-amber','<strong>Shingrix</strong> (rilevante per occhi) e <strong>COVID</strong> stagionale. <span class="tag-amber">Da valutare</span>'));
-    b.appendChild(row('dot-amber','<strong>Stabilità del cammino</strong> (Apple Watch) in calo costante da 5 mesi: 88.6% → 81.8%. Ancora nella fascia "OK" ma da monitorare, in relazione a gonartrosi e fusione L4-L5. <span class="tag-amber">Da seguire</span>'));
+    b.appendChild(row('dot-amber','<strong>Stabilità del cammino</strong> (Apple Watch): minimo a metà settembre (80%), risalita a 87-88% a inizio ottobre e 83% il 21/10, ancora sotto i livelli 2021-2023. Da monitorare, in relazione a gonartrosi e fusione L4-L5. <span class="tag-amber">Da seguire</span>'));
+    b.appendChild(row('dot-amber','<strong>Cadute rilevate dall\'Apple Watch</strong>: 9 dal 2021, 5 nel 2026 (06/03, 08/03, 31/03, 21/06, 26/06). Da chiarire quali erano cadute vere e riferirle a ortopedico e neurochirurgo. <span class="tag-amber">Da chiarire</span>'));
     b.appendChild(row('dot-green','<strong>Cuore</strong> — ecocardiogramma 19/08/2026 normale (EF 60%). <span class="tag-green">Ok</span>'));
     b.appendChild(row('dot-green','<strong>Aorta</strong> no aneurisma · <strong>BPCO</strong> esclusa · <strong>DMLE</strong> stabile. <span class="tag-green">Rassicuranti</span>'));
     c.appendChild(b);}};
@@ -782,7 +799,7 @@ PANELS.palestra={title:'🏋️ Palestra',quick:['Come sta andando la mia progre
       pc.appendChild(pn);pc.appendChild(pd);pg.appendChild(pc);
     });
     b3.appendChild(pg);
-    var pgn=mk('p','');pgn.style.cssText='font-size:12px;color:var(--text2);margin-top:8px';pgn.textContent='Nessun dolore riportato su questi esercizi durante tutto il periodo.';b3.appendChild(pgn);
+    var pgn=mk('p','');pgn.style.cssText='font-size:12px;color:var(--text2);margin-top:8px';pgn.textContent='Nessun dolore riferito su questi esercizi. Il dolore al ginocchio compare nella vita quotidiana, non durante questi movimenti.';b3.appendChild(pgn);
     c.appendChild(b3);
 
     var b4=mk('div','block'),t4=mk('div','block-title');t4.textContent='Osservazioni cliniche dall\'allenamento';b4.appendChild(t4);
@@ -831,35 +848,43 @@ PANELS.vitali={title:'⌚ Parametri vitali (Apple Watch)',quick:['Cosa significa
       var t1txt=mk('div','block'),t1h=mk('div','block-title');t1h.textContent='Indicatori — aggiornato al '+v.ultimo_aggiornamento;t1txt.appendChild(t1h);c.appendChild(t1txt);
       var cats=[
         {title:'❤️ Cuore e fitness cardio',items:[
-          {l:'FC riposo',v:ic.cuore.fc_riposo,u:' bpm',g:'Buono',cls:'ok'},
+          {l:'FC riposo',v:ic.cuore.fc_riposo,u:' bpm',g:'Buono, stabile',cls:'ok'},
           {l:'FC media giorno',v:ic.cuore.fc_media,u:' bpm',g:'Normale',cls:'ok'},
           {l:'FC camminando',v:ic.cuore.fc_camminando,u:' bpm',g:'Normale',cls:'ok'},
-          {l:'VO2max',v:ic.cuore.vo2max,u:'',g:'Buono per l\'età',cls:'ok'},
-          {l:'SpO2',v:ic.cuore.spo2,u:'%',g:'Border line, da seguire',cls:'warn'},
-          {l:'Freq. respiratoria (notte)',v:ic.cuore.freq_respiratoria,u:'/min',g:'Normale',cls:'ok'}]},
+          {l:'VO2max',v:ic.cuore.vo2max,u:'',g:'Buono per l\'età (picco 34.4 a settembre)',cls:'ok'},
+          {l:'Recupero FC 1 min ('+ic.recupero_fc_data+')',v:ic.cuore.recupero_fc,u:' bpm',g:'Sopra la soglia di 12 bpm (misura singola)',cls:'ok'},
+          {l:'HRV (SDNN)',v:ic.cuore.hrv,u:' ms',g:'Nessuna fascia di riferimento affidabile',cls:''},
+          {l:'SpO2',v:ic.cuore.spo2,u:'%',g:'Stabile nel tempo',cls:'ok'},
+          {l:'Freq. respiratoria (notte)',v:ic.cuore.freq_respiratoria,u:'/min',g:'Normale',cls:'ok'},
+          {l:'ECG ('+ic.ecg.totale+' tracciati)',v:ic.ecg.sinusale,u:' ritmo sinusale',g:'1 non interpretabile, nessuna aritmia',cls:'ok'}]},
         {title:'🏃 Attività quotidiana',items:[
           {l:'Passi',v:ic.attivita.passi,u:'/giorno',g:'Ottimo',cls:'ok'},
           {l:'Distanza',v:ic.attivita.distanza_km,u:' km',g:'Buono',cls:'ok'},
           {l:'Energia attiva',v:ic.attivita.energia_attiva,u:' kcal',g:'Buono',cls:'ok'},
           {l:'Minuti esercizio',v:ic.attivita.minuti_esercizio,u:' min',g:'Ottimo',cls:'ok'},
-          {l:'Piani saliti',v:ic.attivita.piani_saliti,u:'/giorno',g:'Buono',cls:'ok'},
+          {l:'Piani saliti',v:ic.attivita.piani_saliti,u:'/giorno',g:'Sotto la media 2019-2022',cls:'warn'},
           {l:'Tempo in piedi',v:ic.attivita.tempo_in_piedi,u:' min',g:'Informativo',cls:''}]},
         {title:'⚖️ Equilibrio e cammino',items:[
           {l:'Velocità cammino',v:ic.cammino.velocita,u:' km/h',g:'Buono',cls:'ok'},
           {l:'Lunghezza passo',v:ic.cammino.lunghezza_passo,u:' cm',g:'Informativo',cls:''},
-          {l:'Stabilità cammino',v:ic.cammino.stabilita,u:'%',g:'Da monitorare (trend in calo)',cls:'warn'},
+          {l:'Stabilità cammino ('+ic.stabilita_cammino_data+')',v:ic.cammino.stabilita,u:'%',g:'In risalita, ancora sotto 2021-2023',cls:'warn'},
+          {l:'Cadute rilevate (2026)',v:ic.cadute.dal_2026,u:' ('+ic.cadute.totale+' dal 2021)',g:'Da chiarire se reali o falsi allarmi',cls:'warn'},
           {l:'Asimmetria',v:ic.cammino.asimmetria,u:'%',g:'Normale',cls:'ok'},
           {l:'Doppio appoggio',v:ic.cammino.doppio_appoggio,u:'%',g:'Informativo',cls:''},
           {l:'Velocità scale',v:ic.cammino.velocita_scale,u:' m/s',g:'Nessun riferimento standard',cls:''}]},
-        {title:'😴 Sonno (ultimi 7 giorni)',items:[
-          {l:'Durata media',v:ic.sonno.durata,u:'',g:'Leggermente sotto il consigliato',cls:'warn'},
-          {l:'Qualità',v:ic.sonno.qualita,u:'/100',g:'Nessuna fascia Apple verificata',cls:''}]},
+        {title:'😴 Sonno (ultimi 30 giorni)',items:[
+          {l:'Durata media',v:ic.sonno.durata,u:'',g:'Sotto le 7-8 ore consigliate',cls:'warn'},
+          {l:'Notti sotto le 6 ore',v:ic.sonno.notti_sotto_6h,u:'',g:'Da tenere d\'occhio',cls:'warn'},
+          {l:'Sonno profondo',v:ic.sonno.profondo_min,u:' min',g:'Stima del watch, approssimativa',cls:''},
+          {l:'Sonno REM',v:ic.sonno.rem_min,u:' min',g:'Stima del watch, approssimativa',cls:''},
+          {l:'Qualità (manuale, fine set)',v:ic.sonno.qualita,u:'/100',g:'Nessuna fascia Apple verificata',cls:''}]},
         {title:'🔊 Esposizione sonora',items:[
           {l:'Rumore ambientale',v:ic.udito.rumore_ambientale,u:' dB',g:'Normale',cls:'ok'},
           {l:'Volume cuffie',v:ic.udito.volume_cuffie,u:' dB',g:'Normale',cls:'ok'}]},
-        {title:'☀️ Altro',items:[
+        {title:'☀️ Corpo e altro',items:[
           {l:'Luce diurna',v:ic.altro.luce_giorno,u:' min/g',g:'Informativo',cls:''},
-          {l:'Peso ('+ic.altro.peso_data+')',v:ic.altro.peso_ultimo,u:' kg',g:'Dato non recente',cls:''}]}
+          {l:'Peso ('+ic.altro.peso_data+')',v:ic.altro.peso_ultimo,u:' kg',g:'In lento aumento (+6 kg dal 2017)',cls:'warn'},
+          {l:'Massa grassa ('+ic.altro.massa_grassa_data+')',v:ic.altro.massa_grassa,u:'%',g:'Dato non aggiornato',cls:''}]}
       ];
       var legend=mk('div','block'),lt=mk('p','');lt.style.cssText='font-size:11px;color:var(--text2)';
       lt.innerHTML='<span class="tag-green">verde</span> = nella norma/buono · <span class="tag-amber">giallo</span> = da monitorare · senza colore = solo informativo, senza un riferimento clinico standard affidabile.';
@@ -889,8 +914,14 @@ PANELS.vitali={title:'⌚ Parametri vitali (Apple Watch)',quick:['Cosa significa
       var b2b=mk('div','block');b2b.style.cssText='border-color:var(--amber);background:var(--ambrbg)';
       var t2b=mk('div','block-title');t2b.textContent='📉 Andamento equilibrio — da seguire';t2b.style.color='var(--ambrt)';b2b.appendChild(t2b);
       var eqp=mk('p','');eqp.style.cssText='font-size:13px;color:var(--text3);line-height:1.6';
-      eqp.innerHTML='<strong>Stabilità del cammino: '+ic.stabilita_cammino+'%</strong> — '+ic.stabilita_cammino_trend;
+      eqp.innerHTML='<strong>Stabilità del cammino: '+ic.stabilita_cammino+'% ('+ic.stabilita_cammino_data+')</strong> — '+ic.stabilita_cammino_trend;
       b2b.appendChild(eqp);c.appendChild(b2b);
+
+      var b2c=mk('div','block');b2c.style.cssText='border-color:var(--amber);background:var(--ambrbg)';
+      var t2c=mk('div','block-title');t2c.textContent='⚠️ Cadute rilevate dal watch — da chiarire';t2c.style.color='var(--ambrt)';b2c.appendChild(t2c);
+      var cdp=mk('p','');cdp.style.cssText='font-size:13px;color:var(--text3);line-height:1.6';
+      cdp.innerHTML='<strong>'+ic.cadute.totale+' cadute registrate dal 2021, '+ic.cadute.dal_2026+' nel 2026</strong> ('+ic.cadute.date_2026+'). Precedenti: '+ic.cadute.precedenti+'. Sono rilevazioni automatiche e possono includere falsi allarmi: da confermare quali fossero cadute vere.';
+      b2c.appendChild(cdp);c.appendChild(b2c);
 
       if(v.note.length>0){
         var b3=mk('div','block'),t3=mk('div','block-title');t3.textContent='Osservazioni';b3.appendChild(t3);
