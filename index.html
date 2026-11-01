@@ -225,7 +225,7 @@ body{font-family:system-ui,sans-serif;font-size:14px;background:var(--bg);color:
     <div class="tile-icon">⌚</div>
     <div class="tile-title">Parametri vitali</div>
     <div class="tile-sub">Apple Watch: FC, SpO2, equilibrio</div>
-    <div class="tile-badges"><span class="tag-green">FC 58.6</span><span class="tag-amber">cadute da chiarire</span></div>
+    <div class="tile-badges"><span class="tag-green">FC 58.6</span><span class="tag-green">nessuna caduta reale</span></div>
     <span class="tile-arrow">›</span>
   </div>
 </div>
@@ -333,7 +333,7 @@ var profile = {
       udito:{rumore_ambientale:62,volume_cuffie:66},
       altro:{luce_giorno:104,peso_ultimo:67.1,peso_data:"21/02/2026",peso_trend:"61,0 kg (mag 2017) → 67,1 kg (feb 2026): +6 kg in 9 anni, aumento graduale — da monitorare",massa_grassa:15.8,massa_grassa_data:"11/03/2022"},
       ecg:{totale:124,sinusale:123,dal:"03/10/2019",al:"20/10/2026",esito:"123 'Ritmo sinusale'; 1 registrazione di qualità insufficiente (non interpretabile, non anomala)"},
-      cadute:{totale:9,dal_2026:5,date_2026:"06/03, 08/03, 31/03, 21/06, 26/06",precedenti:"10/06/2021, 23/06/2022, 12/12/2024, 05/01/2025"}
+      cadute:{totale:9,dal_2026:5,date_2026:"06/03, 08/03, 31/03, 21/06, 26/06",precedenti:"10/06/2021, 23/06/2022, 12/12/2024, 05/01/2025",esito:"Confermato da Cataldo il 01/11/2026: nessuna caduta reale, erano movimenti bruschi interpretati come cadute dal watch (falsi allarmi)."}
     },
     trend_mensile:[
       {mese:"nov 25",fc_riposo:60.9,spo2:94.9,passi:10827,stabilita_cammino:82.1,hrv:42.1,sonno_h:6.77},
@@ -350,7 +350,7 @@ var profile = {
       {mese:"ott 26",fc_riposo:58.6,spo2:94.9,passi:11290,stabilita_cammino:85.7,hrv:43.5,sonno_h:6.51}
     ],
     note:[
-      "CADUTE RILEVATE DAL WATCH: l'Apple Watch ha registrato 9 cadute dal 2021, di cui 5 nel 2026 (06/03, 08/03, 31/03, 21/06, 26/06). Sono rilevazioni automatiche e possono includere falsi allarmi (movimenti bruschi, palestra, ecc.): da confermare con Cataldo quali erano cadute vere. Se reali, sono rilevanti per equilibrio, ginocchio instabile e fusione L4-L5, e vanno riferite a ortopedico e neurochirurgo.",
+      "CADUTE RILEVATE DAL WATCH: l'Apple Watch ha registrato 9 eventi classificati come cadute dal 2021 (5 nel 2026: 06/03, 08/03, 31/03, 21/06, 26/06). Cataldo ha confermato il 01/11/2026 che NON erano cadute reali ma movimenti bruschi (falsi allarmi): nessuna caduta vera da riferire a ortopedico o neurochirurgo.",
       "Stabilità del cammino (Apple Walking Steadiness): in calo dal 2021 al 2025 (94% → 80% di media annua), minimo di metà settembre 2026 (80-81%), poi risalita a 87-88% a inizio ottobre e 83% il 21/10. È l'indicatore di equilibrio/rischio caduta calcolato dal watch dall'andatura quotidiana: ancora sotto i livelli 2021-2023, da tenere sotto osservazione. Si collega all'esercizio di equilibrio monopodalico suggerito nella scheda Palestra, finora non entrato nel log.",
       "Recupero cardio (Heart Rate Recovery): per la prima volta c'è una misura, 20 bpm di calo nel primo minuto dopo l'allenamento del 22/10/2026. Un calo superiore a 12 bpm è la soglia classicamente considerata normale. È un valore singolo: serve ripeterlo nel tempo per dirne di più.",
       "VO2max: 31.5 (22/10/2026), in calo rispetto al picco di 34.4 del 22/09/2026 ma dentro le oscillazioni del 2026 (31.2-34.4). La stima del watch varia con il tipo di camminata/allenamento registrato, quindi una singola variazione non è significativa.",
@@ -434,7 +434,7 @@ var profile = {
     medico_base:"LDL 98 → target ≤70 (ottimizzare statina). Dosare vitamina D 25-OH e HbA1c al prossimo prelievo. Shingrix: indicato a 70 anni, rilevante per situazione oculare (evitare zoster oftalmico). COVID: valutare richiamo stagionale, eventualmente con antinfluenzale. Rivedere lista integratori.",
     oculista:"Oltre all'AREDS 2 aggiungo Vision Defender MZ (meso-zeaxantina): ha senso o è ridondante? Confermare posologia dei due prodotti.",
     neurochirurgo:"Follow-up set 2026. Claudicatio risolta, no sintomi neurologici. Dolore solo posturale stabile, migliora col bridge. Palestra macchine+manubri controllato + core a casa. NOTA: Leg Press (80kg) causa lieve fastidio alla schiena, sospesa da metà luglio — chiedere se e quando reintrodurla. Sedute di palestra salite a 130-155 min (ottobre 2026): chiedere se è un problema per la fusione. Chiedere: tenuta fusione, stato livelli adiacenti L3-L4/L5-S1, sicurezza allenamento, utilità fisioterapia.",
-    ortopedico:"Gonartrosi tricompartimentale DX nota (RX 18/09/2025). Dolore meccanico su: scale, girarsi a letto, appoggio del piede camminando, flessione profonda nella vita quotidiana (chinarsi/inginocchiarsi) — MAI durante leg extension/curl in palestra a carico leggero. Arcoxia (etoricoxib) 10gg efficace solo temporaneamente. In corso UC-II collagene tipo 2. NOVITÀ 25/09/2026: comparsi scrosci/schiocchi articolari e sensazione di cedimento/instabilità (sporadica, non ad ogni passo) — da riferire esplicitamente, non presenti in precedenza. Chiedere: RM ginocchio per escludere componente meniscale/legamentosa, opportunità di infiltrazione, indicazioni su squat/flessione profonda da evitare, fisioterapia. Anche da Apple Watch: stabilità del cammino in calo 2021-2025 (94%→80%), in ripresa nel 2026 ma ancora sotto i livelli 2021-2023, e 5 cadute rilevate dal watch nel 2026 (06/03, 08/03, 31/03, 21/06, 26/06; da confermare se reali) — utile menzionarlo in ottica di rischio caduta legato all'instabilità del ginocchio."
+    ortopedico:"Gonartrosi tricompartimentale DX nota (RX 18/09/2025). Dolore meccanico su: scale, girarsi a letto, appoggio del piede camminando, flessione profonda nella vita quotidiana (chinarsi/inginocchiarsi) — MAI durante leg extension/curl in palestra a carico leggero. Arcoxia (etoricoxib) 10gg efficace solo temporaneamente. In corso UC-II collagene tipo 2. NOVITÀ 25/09/2026: comparsi scrosci/schiocchi articolari e sensazione di cedimento/instabilità (sporadica, non ad ogni passo) — da riferire esplicitamente, non presenti in precedenza. Chiedere: RM ginocchio per escludere componente meniscale/legamentosa, opportunità di infiltrazione, indicazioni su squat/flessione profonda da evitare, fisioterapia. Anche da Apple Watch: stabilità del cammino in calo 2021-2025 (94%→80%), in ripresa nel 2026 ma ancora sotto i livelli 2021-2023, e nessuna caduta reale (i 5 avvisi del watch nel 2026 erano movimenti bruschi, confermato 01/11/2026) — utile menzionare solo il calo di stabilità in ottica di rischio caduta legato all'instabilità del ginocchio."
   },
   referti_archivio:{
     "Oculistica":[
@@ -638,7 +638,7 @@ PANELS.alerts={title:'⚠️ Alert & panoramica',quick:['Come ottimizzare LDL a 
     b.appendChild(row('dot-amber','<strong>Vitamina D</strong> sospesa e mai dosata + <strong>HbA1c</strong> mai fatta. <span class="tag-amber">Al prelievo</span>'));
     b.appendChild(row('dot-amber','<strong>Shingrix</strong> (rilevante per occhi) e <strong>COVID</strong> stagionale. <span class="tag-amber">Da valutare</span>'));
     b.appendChild(row('dot-amber','<strong>Stabilità del cammino</strong> (Apple Watch): minimo a metà settembre (80%), risalita a 87-88% a inizio ottobre e 83% il 21/10, ancora sotto i livelli 2021-2023. Da monitorare, in relazione a gonartrosi e fusione L4-L5. <span class="tag-amber">Da seguire</span>'));
-    b.appendChild(row('dot-amber','<strong>Cadute rilevate dall\'Apple Watch</strong>: 9 dal 2021, 5 nel 2026 (06/03, 08/03, 31/03, 21/06, 26/06). Da chiarire quali erano cadute vere e riferirle a ortopedico e neurochirurgo. <span class="tag-amber">Da chiarire</span>'));
+    b.appendChild(row('dot-green','<strong>Cadute</strong>: i 5 avvisi del watch nel 2026 erano movimenti bruschi, non cadute reali (confermato 01/11/2026). <span class="tag-green">Nessuna caduta</span>'));
     b.appendChild(row('dot-green','<strong>Cuore</strong> — ecocardiogramma 19/08/2026 normale (EF 60%). <span class="tag-green">Ok</span>'));
     b.appendChild(row('dot-green','<strong>Aorta</strong> no aneurisma · <strong>BPCO</strong> esclusa · <strong>DMLE</strong> stabile. <span class="tag-green">Rassicuranti</span>'));
     c.appendChild(b);}};
@@ -870,7 +870,7 @@ PANELS.vitali={title:'⌚ Parametri vitali (Apple Watch)',quick:['Cosa significa
           {l:'Velocità cammino',v:ic.cammino.velocita,u:' km/h',g:'Buono',cls:'ok'},
           {l:'Lunghezza passo',v:ic.cammino.lunghezza_passo,u:' cm',g:'Informativo',cls:''},
           {l:'Stabilità cammino ('+ic.stabilita_cammino_data+')',v:ic.cammino.stabilita,u:'%',g:'In risalita, ancora sotto 2021-2023',cls:'warn'},
-          {l:'Cadute rilevate (2026)',v:ic.cadute.dal_2026,u:' ('+ic.cadute.totale+' dal 2021)',g:'Da chiarire se reali o falsi allarmi',cls:'warn'},
+          {l:'Cadute reali',v:0,u:' (avvisi watch 2026: '+ic.cadute.dal_2026+')',g:'Falsi allarmi: movimenti bruschi',cls:'ok'},
           {l:'Asimmetria',v:ic.cammino.asimmetria,u:'%',g:'Normale',cls:'ok'},
           {l:'Doppio appoggio',v:ic.cammino.doppio_appoggio,u:'%',g:'Informativo',cls:''},
           {l:'Velocità scale',v:ic.cammino.velocita_scale,u:' m/s',g:'Nessun riferimento standard',cls:''}]},
@@ -919,10 +919,10 @@ PANELS.vitali={title:'⌚ Parametri vitali (Apple Watch)',quick:['Cosa significa
       eqp.innerHTML='<strong>Stabilità del cammino: '+ic.stabilita_cammino+'% ('+ic.stabilita_cammino_data+')</strong> — '+ic.stabilita_cammino_trend;
       b2b.appendChild(eqp);c.appendChild(b2b);
 
-      var b2c=mk('div','block');b2c.style.cssText='border-color:var(--amber);background:var(--ambrbg)';
-      var t2c=mk('div','block-title');t2c.textContent='⚠️ Cadute rilevate dal watch — da chiarire';t2c.style.color='var(--ambrt)';b2c.appendChild(t2c);
+      var b2c=mk('div','block');b2c.style.cssText='border-color:var(--green);background:var(--grnbg)';
+      var t2c=mk('div','block-title');t2c.textContent='✓ Cadute rilevate dal watch — falsi allarmi';t2c.style.color='var(--grnt)';b2c.appendChild(t2c);
       var cdp=mk('p','');cdp.style.cssText='font-size:13px;color:var(--text3);line-height:1.6';
-      cdp.innerHTML='<strong>'+ic.cadute.totale+' cadute registrate dal 2021, '+ic.cadute.dal_2026+' nel 2026</strong> ('+ic.cadute.date_2026+'). Precedenti: '+ic.cadute.precedenti+'. Sono rilevazioni automatiche e possono includere falsi allarmi: da confermare quali fossero cadute vere.';
+      cdp.innerHTML='<strong>Nessuna caduta reale.</strong> Il watch ha segnalato '+ic.cadute.totale+' eventi dal 2021 ('+ic.cadute.dal_2026+' nel 2026: '+ic.cadute.date_2026+'); Cataldo ha confermato il 01/11/2026 che erano movimenti bruschi, non cadute. Lo storico resta utile solo come promemoria: gli avvisi automatici non vanno scambiati per cadute.';
       b2c.appendChild(cdp);c.appendChild(b2c);
 
       if(v.note.length>0){
